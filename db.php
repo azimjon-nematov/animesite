@@ -1,14 +1,19 @@
 <?php
+global $DB_HOST;
+global $DB_USER;
+global $DB_PASSWORD;
+global $DB_DB;
 
-$DB_HOST = 'localhost'
-$DB_USER = 'root'
-$DB_PASSWORD = 'root'
-$DB_DB = 'animesite'
 
-$db = @mysqli_connect($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_DB) or die('ошибка соединение с БД');
-mysqli_set_charset($db, 'utf8');
+$DB_HOST = 'localhost';
+$DB_USER = 'root';
+$DB_PASSWORD = 'root';
+$DB_DB = 'animesite';
 
-$sql = "SELECT a.`title`, a.`desc`, s.`name` as 'studio', a.`releaseDate` FROM animes a LEFT JOIN studios s ON a.studio_id = s.id";
+// $db = @mysqli_connect($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_DB) or die('ошибка соединение с БД');
+// mysqli_set_charset($db, 'utf8');
+
+// $sql = "SELECT a.`title`, a.`desc`, s.`name` as 'studio', a.`releaseDate` FROM animes a LEFT JOIN studios s ON a.studio_id = s.id";
 
 //$animes = mysqli_fetch_all(mysqli_query($db, $sql));
 
@@ -25,18 +30,25 @@ $sql = "SELECT a.`title`, a.`desc`, s.`name` as 'studio', a.`releaseDate` FROM a
 
 
 function SELECT($sql) {
-
+	global $DB_HOST;
+	global $DB_USER;
+	global $DB_PASSWORD;
+	global $DB_DB;
 	$db = @mysqli_connect($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_DB) or die('ошибка соединение с БД');
 	mysqli_set_charset($db, 'utf8');
     $result = mysqli_fetch_all(mysqli_query($db, $sql));
 	$db->close();
 
-	return $result
+	return $result;
 }
 
-function SELECT($sql, $params, $data) {
+function SELECTWITHPARAMS($sql, $params, $data) {
+	global $DB_HOST;
+	global $DB_USER;
+	global $DB_PASSWORD;
+	global $DB_DB;
 
-	$db = @mysqli_connect($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_DB) or die('ошибка соединение с БД');
+	$db = @mysqli_connect($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_DB) or die('ошибка соединение с БД - SELECTWITHPARAMS');
 	mysqli_set_charset($db, 'utf8');
 	$statement = $db->prepare($sql);
 	$statement->bind_param($params, ...$data);
@@ -47,10 +59,10 @@ function SELECT($sql, $params, $data) {
 	$statement->close();
 	$db->close();
 
-	return $result
+	return $result;
 }
 
-function EXEC($sql, $params, $data) {
+function execute123($sql, $params, $data) {
 
 	$db = @mysqli_connect($DB_HOST, $DB_USER, $DB_PASSWORD, $DB_DB) or die('ошибка соединение с БД');
 	mysqli_set_charset($db, 'utf8');
@@ -58,10 +70,12 @@ function EXEC($sql, $params, $data) {
 	$statement->bind_param($params, ...$data);
 	$statement->execute();
 
+	$effected_rows = $statement->effected_rows;
+
 	$statement->close();
 	$db->close();
 
-	return $result
+	return $effected_rows;
 }
 
 
