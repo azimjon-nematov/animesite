@@ -1,3 +1,8 @@
+<?php 
+session_start();
+$session_id = session_id();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -102,6 +107,10 @@
 								<!-- end header nav -->
 
 
+								<?php 
+									$isRegistred = empty($_SESSION['id']);
+								?>
+
 
 								<!-- header auth -->
 								<div class="header__auth">
@@ -109,10 +118,21 @@
 										<i class="icon ion-ios-search"></i>
 									</button>
 
-									<a href="signin.html" class="header__sign-in">
+									<?php if ($isRegistred): ?>
+
+									<a href="signin.php" class="header__sign-in">
 										<i class="icon ion-ios-log-in"></i>
 										<span>sign in</span>
 									</a>
+
+									<?php else: ?>
+
+									<a href="logout.php" class="header__sign-in">
+										<i class="icon ion-ios-log-in"></i>
+										<span>log out</span>
+									</a>
+
+									<?php endif ?>
 								</div>
 								<!-- end header auth -->
 

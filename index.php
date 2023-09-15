@@ -1,6 +1,8 @@
 <?php 
-include('inc/head.php');
+//print_r($_SESSION);
 include('db.php');
+
+include('inc/head.php');
 ?>
 
 
@@ -106,13 +108,12 @@ include('db.php');
 			<?php
 
 			$sql = "SELECT a.id 'id', a.title, a.`desc`, s.`name` as 'studio', a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON a.studio_id = s.id";
+			
 			$animes = SELECT($sql);
 
 			for($i = 0; $i < count($animes); ++$i) {
-				$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ".$animes[$i][0];
-				array_push($animes[$i], SELECT($sql));
-				// $sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
-				// array_push($animes[$i], SELECTWITHPARAMS($sql, 'i,' [$animes[$i][0]]));
+				$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
+				$animes[$i]['genres'] = SELECT($sql, 'i', [$animes[$i]['id']]);
 			}
 
 			?>
@@ -133,11 +134,11 @@ include('db.php');
 									</a>
 								</div>
 								<div class="card__content">
-									<h3 class="card__title"><a href="#"><?php echo $anime[1] ?></a></h3>
+									<h3 class="card__title"><a href="#"><?php echo $anime["title"] ?></a></h3>
 									<span class="card__category">
 										<?php 
-											foreach($anime[7] as $genre) {
-												echo '<a href="#">' . $genre[0] . '</a>';
+											foreach($anime['genres'] as $genre) {
+												echo '<a href="#">' . $genre["name"] . '</a>';
 											}
 										?>
 									</span>
