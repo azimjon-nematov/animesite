@@ -128,7 +128,7 @@ include('inc/head.php');
 						<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 							<div class="card">
 								<div class="card__cover">
-									<img src="assets/img/covers/cover.jpg" alt="">
+									<?php echo '<img src="' . $anime['coverImage'] . '" alt="">'; ?>
 									<a href="#" class="card__play">
 										<i class="icon ion-ios-play"></i>
 									</a>

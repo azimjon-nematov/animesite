@@ -18,13 +18,11 @@ class Log {
 	}
 
 	private function log() {
-		// $logDate = date("Y-m-d H-i-s");
-		// $logFile = fopen('logs/log' . $logDate .'.txt', 'a');
 		$now = DateTime::createFromFormat('U.u', microtime(true));
-		$logFile = fopen('logs/log' . $now->format("m-d-Y H:i:s.u") .'.txt', 'a');
+		$logFile = fopen('logs/log' . $now->format("Y-m-d H-i-s.u") .'.txt', 'a');
 
 		if(flock($logF, LOCK_EX)) {
-			fwrite($logFile, $logDate);
+			fwrite($logFile, $now->format("Y-m-d"));
 			fwrite($logFile, 'error text: ' . $this->error);
 			fwrite($logFile, 'error code: ' . $this->errorCode);
 			fwrite($logFile, 'in file: ' . $this->file);
@@ -33,7 +31,6 @@ class Log {
 			flock($logFile, LOCK_UN);
 		}
 		fclose($logFile);
-
 	}
 
 }
