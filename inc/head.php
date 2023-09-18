@@ -51,10 +51,15 @@ $session_id = session_id();
 						<div class="col-12">
 							<div class="header__content">
 								<!-- header logo -->
-								<a href="index.html" class="header__logo">
+								<a href="index.php" class="header__logo">
 									<img src="assets/img/logo.svg" alt="">
 								</a>
 								<!-- end header logo -->
+
+
+								<?php 
+									$isRegistred = empty($_SESSION['id']);
+								?>
 
 
 								<!-- header nav -->
@@ -91,6 +96,10 @@ $session_id = session_id();
 										<a href="faq.html" class="header__nav-link">Help</a>
 									</li>
 
+									<li class="header__nav-item">
+										<a href="adminpanel/index.php" class="header__nav-link">Admin panel</a>
+									</li>
+
 									<!-- dropdown -->
 									<li class="dropdown header__nav-item">
 										<a class="dropdown-toggle header__nav-link header__nav-link--more" href="#" role="button" id="dropdownMenuMore" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-ios-more"></i></a>
@@ -105,11 +114,6 @@ $session_id = session_id();
 									<!-- end dropdown -->
 								</ul>
 								<!-- end header nav -->
-
-
-								<?php 
-									$isRegistred = empty($_SESSION['id']);
-								?>
 
 
 								<!-- header auth -->
