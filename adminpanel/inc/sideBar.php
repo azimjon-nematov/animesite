@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="index.php" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Аниме</a>
@@ -30,6 +30,7 @@
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="studio_list.php" class="dropdown-item">Список студий</a>
                             <a href="studio_create_form.php" class="dropdown-item">Добавить студию</a>
+                            <a href="XMLFromDB.php?table=studio" class="dropdown-item">Экспорт таблицы студия</a>
                         </div>
                     </div>
 
@@ -39,6 +40,7 @@
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="genre_list.php" class="dropdown-item">Список жанров</a>
                             <a href="genre_create_form.php" class="dropdown-item">Добавить жанр</a>
+                            <a href="XMLFromDB.php?table=genre" class="dropdown-item">Экспорт таблицы жанр</a>
                         </div>
                     </div>
 
@@ -60,6 +62,9 @@
                         </div>
                     </div>
 
+                    <div class="nav-item dropdown">
+                        <a href="DBFromXML.php" class="nav-link" ><i class="fa fa-laptop me-2"></i>Импорт</a>
+                    </div>
 
                  
                     
