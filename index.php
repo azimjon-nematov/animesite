@@ -1,6 +1,6 @@
 <?php 
-include('inc/head.php');
 include('db.php');
+include('inc/head.php');
 ?>
 
 
@@ -44,7 +44,7 @@ include('db.php');
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
-				<h1 class="home__title"><b>NEW ITEMS</b> OF THIS SEASON</h1>
+				<h1 class="home__title"><b>NEW FILMS</b> OF THIS SEASON</h1>
 
 				<button class="home__nav home__nav--prev" type="button">
 					<i class="icon ion-ios-arrow-round-back"></i>
@@ -60,13 +60,76 @@ include('db.php');
 						<!-- card -->
 						<div class="card card--big">
 							<div class="card__cover">
-								<img src="assets/img/covers/cover.jpg" alt="">
+								<img src="assets/img/posters/tokyo ghoul.jpg" alt="">
 								<a href="#" class="card__play">
 									<i class="icon ion-ios-play"></i>
 								</a>
 							</div>
 							<div class="card__content">
-								<h3 class="card__title"><a href="#">I Dream in Another Language</a></h3>
+								<h3 class="card__title"><a href="#">Tokio ghoul</a></h3>
+								<span class="card__category">
+									<a href="#">Action</a>
+									<a href="#">Triler</a>
+								</span>
+								<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
+							</div>
+						</div>
+						<!-- end card -->
+					</div>
+
+					<div class="item">
+						<!-- card -->
+						<div class="card card--big">
+							<div class="card__cover">
+								<img src="assets/img/posters/demon_slayer.jpg" alt="">
+								<a href="#" class="card__play">
+									<i class="icon ion-ios-play"></i>
+								</a>
+							</div>
+							<div class="card__content">
+								<h3 class="card__title"><a href="#">Demon slayer</a></h3>
+								<span class="card__category">
+									<a href="#">Action</a>
+									<a href="#">Triler</a>
+								</span>
+								<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
+							</div>
+						</div>
+						<!-- end card -->
+					</div>
+
+					<div class="item">
+						<!-- card -->
+						<div class="card card--big">
+							<div class="card__cover">
+								<img src="assets/img/posters/attack on titan.jpg" alt="">
+								<a href="#" class="card__play">
+									<i class="icon ion-ios-play"></i>
+								</a>
+							</div>
+							<div class="card__content">
+								<h3 class="card__title"><a href="#">Attack on Titan</a></h3>
+								<span class="card__category">
+									<a href="#">Action</a>
+									<a href="#">Triler</a>
+								</span>
+								<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
+							</div>
+						</div>
+						<!-- end card -->
+					</div>
+					
+					<div class="item">
+						<!-- card -->
+						<div class="card card--big">
+							<div class="card__cover">
+								<img src="assets/img/posters/bocchi_the_rock.jpg" alt="">
+								<a href="#" class="card__play">
+									<i class="icon ion-ios-play"></i>
+								</a>
+							</div>
+							<div class="card__content">
+								<h3 class="card__title"><a href="#">Bocchi the Rock</a></h3>
 								<span class="card__category">
 									<a href="#">Action</a>
 									<a href="#">Triler</a>
@@ -106,13 +169,12 @@ include('db.php');
 			<?php
 
 			$sql = "SELECT a.id 'id', a.title, a.`desc`, s.`name` as 'studio', a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON a.studio_id = s.id";
+			
 			$animes = SELECT($sql);
 
 			for($i = 0; $i < count($animes); ++$i) {
-				$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ".$animes[$i][0];
-				array_push($animes[$i], SELECT($sql));
-				// $sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
-				// array_push($animes[$i], SELECTWITHPARAMS($sql, 'i,' [$animes[$i][0]]));
+				$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
+				$animes[$i]['genres'] = SELECT($sql, 'i', [$animes[$i]['id']]);
 			}
 
 			?>
@@ -127,17 +189,17 @@ include('db.php');
 						<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 							<div class="card">
 								<div class="card__cover">
-									<img src="assets/img/covers/cover.jpg" alt="">
+									<?php echo '<img src="' . $anime['coverImage'] . '" alt="">'; ?>
 									<a href="#" class="card__play">
 										<i class="icon ion-ios-play"></i>
 									</a>
 								</div>
 								<div class="card__content">
-									<h3 class="card__title"><a href="#"><?php echo $anime[1] ?></a></h3>
+									<h3 class="card__title"><a href="#"><?php echo $anime["title"] ?></a></h3>
 									<span class="card__category">
 										<?php 
-											foreach($anime[7] as $genre) {
-												echo '<a href="#">' . $genre[0] . '</a>';
+											foreach($anime['genres'] as $genre) {
+												echo '<a href="#">' . $genre["name"] . '</a>';
 											}
 										?>
 									</span>

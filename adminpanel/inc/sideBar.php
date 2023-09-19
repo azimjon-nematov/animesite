@@ -52,6 +52,14 @@
                         </div>
                     </div>
 
+                    <div class="nav-item dropdown">
+                        <a href="userList.php" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Пользователи</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="userList.php" class="dropdown-item">Список пользователей</a>
+                            <a href="addUserForm.php" class="dropdown-item">Добавить пользователя</a>
+                        </div>
+                    </div>
+
 
 
                     <div class="nav-item dropdown">

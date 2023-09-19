@@ -3344,6 +3344,12 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   opacity: 1;
   color: #fff;
 }
+.err__text {
+  margin-top: 20px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  font-family: 'Open Sans', sans-serif;
+}
 .sign__text {
   margin-top: 20px;
   font-size: 14px;
