@@ -1,5 +1,8 @@
 <?php
 include('inc/header.php');
+include('./CRUD/anime/read.php');
+include('./CRUD/genre/read.php');
+
 ?>
 <body>
     <div class="container-fluid position-relative d-flex p-0">
@@ -21,49 +24,44 @@ include('inc/header.php');
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-8">
                         <div class="bg-secondary rounded h-100 p-4">
-                            <h6 class="mb-4">Add anime Form</h6>
-                            <form>
+                            <h6 class="mb-4">Add anime genre Form</h6>
+                            <form action="./CRUD/anime_genre/create.php" method="POST">
 
                                 <div class="mb-3">
-                                    <label class="form-label">Название</label>
-                                    <input type="text" class="form-control" name="name">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Описание</label>
-                                    <textarea class="form-control" name="description"></textarea>
-                                </div>
-
-
-                                <div class="mb-3">
-                                    <label class="form-label">ID студии</label>
-
-                                    <select class="form-select form-select-sm mb-3" >
+                                    <label class="form-label">ID аниме</label>
+                                    <select class="form-select form-select-sm mb-3" name="anime_id" >
                                         <option selected="">Open this select menu</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        <?php  
+                                        if ($animes) {
+                                            foreach ($animes as $anime) { ?>
+                                                <option value="<?=$anime['id']?>"><?=$anime['title']?></option>
+                                            <?php }
+                                        } else {?>
+                                            <option>В базе еще нет аниме</option>
+                                        <?php }
+                                        ?>
+                                    </select>
+                                </div>
+
+
+                                <div class="mb-3">
+                                    <label class="form-label">ID жанра</label>
+                                    <select class="form-select form-select-sm mb-3" name="genre_id" >
+                                        <option selected="">Open this select menu</option>
+                                        <?php  
+                                        if ($genres) {
+                                            foreach ($genres as $genre) { ?>
+                                                <option value="<?=$genre['id']?>"><?=$genre['name']?></option>
+                                            <?php }
+                                        } else {?>
+                                            <option>В базе еще нет жанров</option>
+                                        <?php }
+                                        ?>
                                     </select>
                                 </div>
                                 
-                                <div class="mb-3">
-                                    <label class="form-label">Дата публикации</label>
-                                    <input type="date" class="form-control" name="releaseDate">
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Возрастной рейтинг</label>
-                                    <input type="number" class="form-control" name="ageRating">
-                                </div>
-
-
-                                <div class="mb-3">
-                                    <label for="formFileSm" class="form-label">Выберите постер для аниме</label>
-                                    <input class="form-control form-control-sm bg-dark" name="coverImage" type="file">
-                                </div>
                                 
-                                <button type="submit" class="btn btn-primary">Обновить</button>
-                                <button type="submit" class="btn btn-primary">Удалить</button>
+                                <button type="submit" class="btn btn-primary">Добавить</button>
                             </form>
                         </div>
                     </div>

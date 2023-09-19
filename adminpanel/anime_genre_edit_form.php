@@ -1,5 +1,13 @@
 <?php
 include('inc/header.php');
+include('./db/createConnectionWithDB.php');
+include('./CRUD/anime/read.php');
+include('./CRUD/genre/read.php');
+$id = $_GET['id'];
+$sql = "SELECT * FROM `anime_genre` WHERE id=$id";
+$stmt = $pdo->query($sql);
+$anime_genre = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 <body>
     <div class="container-fluid position-relative d-flex p-0">
@@ -21,16 +29,44 @@ include('inc/header.php');
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-8">
                         <div class="bg-secondary rounded h-100 p-4">
-                            <h6 class="mb-4">Edit studio Form</h6>
-                            <form>
+                            <h6 class="mb-4">Edit anime genre Form</h6>
+                            <form action="./CRUD/anime_genre/update.php" method="POST">
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">ID аниме</label>
+                                    <select class="form-select form-select-sm mb-3" name="anime_id" >
+                                        <option selected="">Open this select menu</option>
+                                        <?php  
+                                        if ($animes) {
+                                            foreach ($animes as $anime) { ?>
+                                                <option <?=$anime['id'] == $anime_genre[0]['anime_id'] ? 'selected' : ''?> value="<?=$anime['id']?>"><?=$anime['title']?></option>
+                                            <?php }
+                                        }?>
+                                    </select>
+                                </div>
+
 
                                 <div class="mb-3">
-                                    <label class="form-label">Название</label>
-                                    <input type="text" class="form-control" name="name">
+                                    <label class="form-label">ID жанра</label>
+                                    <select class="form-select form-select-sm mb-3" name="genre_id" >
+                                        <option selected="">Open this select menu</option>
+                                        <?php  
+                                        if ($genres) {
+                                            foreach ($genres as $genre) { ?>
+                                                <option <?=$genre['id'] == $anime_genre[0]['genre_id'] ? 'selected' : ''?> value="<?=$genre['id']?>"><?=$genre['name']?></option>
+                                            <?php }
+                                        }?>
+                                    </select>
                                 </div>
+
+                                <input type="text" name="id" hidden value="<?=$id?>">
+
+
                         
                                 <button type="submit" class="btn btn-primary">Обновить</button>
-                                <button type="submit" class="btn btn-primary">Удалить</button>
+                                <a href="./CRUD/anime_genre/delete.php?id=<?=$anime_genre[0]['id']?>" class="btn btn-primary">
+                                    Удалить
+                                    </a>
                             </form>
                         </div>
                     </div>

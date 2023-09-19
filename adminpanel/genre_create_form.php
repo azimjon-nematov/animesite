@@ -21,16 +21,15 @@ include('inc/header.php');
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-8">
                         <div class="bg-secondary rounded h-100 p-4">
-                            <h6 class="mb-4">Edit studio Form</h6>
-                            <form>
+                            <h6 class="mb-4"> Форма добавления жанра</h6>
+                            <form action="./CRUD/genre/create.php" method="POST" >
 
                                 <div class="mb-3">
                                     <label class="form-label">Название</label>
                                     <input type="text" class="form-control" name="name">
                                 </div>
-                        
-                                <button type="submit" class="btn btn-primary">Обновить</button>
-                                <button type="submit" class="btn btn-primary">Удалить</button>
+                                
+                                <button type="submit" class="btn btn-primary">Добавить</button>
                             </form>
                         </div>
                     </div>

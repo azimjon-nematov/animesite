@@ -19,8 +19,8 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Аниме</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="animeList.php" class="dropdown-item">Список аниме</a>
-                            <a href="addAnimeForm.php" class="dropdown-item">Добавить аниме</a>
+                            <a href="anime_list.php" class="dropdown-item">Список аниме</a>
+                            <a href="anime_create_form.php" class="dropdown-item">Добавить аниме</a>
                         </div>
                     </div>
 
@@ -28,8 +28,8 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Студио</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="studioList.php" class="dropdown-item">Список студий</a>
-                            <a href="addStudioForm.php" class="dropdown-item">Добавить студию</a>
+                            <a href="studio_list.php" class="dropdown-item">Список студий</a>
+                            <a href="studio_create_form.php" class="dropdown-item">Добавить студию</a>
                         </div>
                     </div>
 
@@ -37,16 +37,26 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Жанры</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="genreList.php" class="dropdown-item">Список жанров</a>
-                            <a href="addGenreForm.php" class="dropdown-item">Добавить жанр</a>
+                            <a href="genre_list.php" class="dropdown-item">Список жанров</a>
+                            <a href="genre_create_form.php" class="dropdown-item">Добавить жанр</a>
                         </div>
                     </div>
 
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Жанры аниме</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="animeGenreList.php" class="dropdown-item">Список жанров аниме</a>
-                            <a href="addAnimeGenreForm.php" class="dropdown-item">Добавить жанр для аниме</a>
+                            <a href="anime_genre_list.php" class="dropdown-item">Список жанров аниме</a>
+                            <a href="anime_genre_create_form.php" class="dropdown-item">Добавить жанр для аниме</a>
+                        </div>
+                    </div>
+
+
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Сезоны</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="season_list.php" class="dropdown-item">Список сезонов</a>
+                            <a href="season_create_form.php" class="dropdown-item">Добавить сезон для аниме</a>
                         </div>
                     </div>
 

@@ -1,5 +1,6 @@
 <?php
 include('inc/header.php');
+include('../adminpanel/CRUD/season/read.php');
 ?>
 <body>
     <div class="container-fluid position-relative d-flex p-0">
@@ -19,12 +20,9 @@ include('inc/header.php');
                             <thead>
                                 <tr class="text-white">
                                     <th scope="col">ID</th>
+                                    <th scope="col">ID anime</th>
                                     <th scope="col">Название</th>
-                                    <th scope="col">Описание</th>
-                                    <th scope="col">ID студии</th>
-                                    <th scope="col">Дата публикации</th>
-                                    <th scope="col">Возрастной рейтинг</th>
-                                    <th scope="col">Постер</th>
+                                    <th scope="col">Order</th>
                                     <th scope="col">Дата создания</th>
                                     <th scope="col">Дата изменения</th>
                                     <th scope="col">Действия</th>
@@ -32,23 +30,19 @@ include('inc/header.php');
                             </thead>
                             <tbody>
                             <?php
-                                $animes = $dbConn->getAllAnimes();
-                                if ($animes) {
-                                    foreach ($animes as $anime) { ?>
-                                        <td><?=$anime['id']?></td>
-                                        <td><?=$anime['title']?></td>
-                                        <td><?=$anime['desc']?></td>
-                                        <td><?=$anime['studio_id']?></td>
-                                        <td><?=$anime['releaseDate']?></td>
-                                        <td><?=$anime['ageLimit']?>+</td>
-                                        <td><?=$anime['coverImage']?></td>
-                                        <td><?=$anime['createDate']?></td>
-                                        <td><?=$anime['updateDate']?></td>
-                                        <td><a class="btn btn-sm btn-primary" href="editAnimeForm.php">Detail</a></td>
+                                if ($seasons) {
+                                    foreach ($seasons as $season) { ?>
+                                        <td><?=$season['id']?></td>
+                                        <td><?=$season['anime_id']?></td>
+                                        <td><?=$season['title']?></td>
+                                        <td><?=$season['order']?></td>
+                                        <td><?=$season['createDate']?></td>
+                                        <td><?=$season['updateDate']?></td>
+                                        <td><a class="btn btn-sm btn-primary" href="season_edit_form.php?id=<?=$season['id']?>">Detail</a></td>
                                         </tr>
                                     <?php }
                                 } else {?>
-                                    <tr><td colspan='8'>Нет доступных данных</td></tr>
+                                    <tr><td colspan='7'>Нет доступных данных</td></tr>
                                 <?php }
                                 ?>
                             </tbody>

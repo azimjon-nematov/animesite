@@ -1,5 +1,6 @@
 <?php
 include('inc/header.php');
+include('../adminpanel/CRUD/anime/read.php');
 ?>
 <body>
     <div class="container-fluid position-relative d-flex p-0">
@@ -12,7 +13,7 @@ include('inc/header.php');
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Список жанров</h6>
+                        <h6 class="mb-0">Recent Salse</h6>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -20,6 +21,11 @@ include('inc/header.php');
                                 <tr class="text-white">
                                     <th scope="col">ID</th>
                                     <th scope="col">Название</th>
+                                    <th scope="col">Описание</th>
+                                    <th scope="col">ID студии</th>
+                                    <th scope="col">Дата публикации</th>
+                                    <th scope="col">Возрастной рейтинг</th>
+                                    <th scope="col">Постер</th>
                                     <th scope="col">Дата создания</th>
                                     <th scope="col">Дата изменения</th>
                                     <th scope="col">Действия</th>
@@ -27,18 +33,22 @@ include('inc/header.php');
                             </thead>
                             <tbody>
                             <?php
-                                $genres = $dbConn->getAllGenres();
-                                if ($genres) {
-                                    foreach ($genres as $genre) { ?>
-                                        <td><?=$genre['id']?></td>
-                                        <td><?=$genre['name']?></td>
-                                        <td><?=$genre['createDate']?></td>
-                                        <td><?=$genre['updateDate']?></td>
-                                        <td><a class="btn btn-sm btn-primary" href="editGenreForm.php">Detail</a></td>
+                                if ($animes) {
+                                    foreach ($animes as $anime) { ?>
+                                        <td><?=$anime['id']?></td>
+                                        <td><?=$anime['title']?></td>
+                                        <td><?=$anime['desc']?></td>
+                                        <td><?=$anime['studio_id']?></td>
+                                        <td><?=$anime['releaseDate']?></td>
+                                        <td><?=$anime['ageLimit']?>+</td>
+                                        <td><?=$anime['coverImage']?></td>
+                                        <td><?=$anime['createDate']?></td>
+                                        <td><?=$anime['updateDate']?></td>
+                                        <td><a class="btn btn-sm btn-primary" href="anime_edit_form.php?id=<?=$anime['id']?>">Detail</a></td>
                                         </tr>
                                     <?php }
                                 } else {?>
-                                    <tr><td colspan='5'>Нет доступных данных</td></tr>
+                                    <tr><td colspan='8'>Нет доступных данных</td></tr>
                                 <?php }
                                 ?>
                             </tbody>

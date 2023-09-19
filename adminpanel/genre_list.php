@@ -1,5 +1,6 @@
 <?php
 include('inc/header.php');
+include('../adminpanel/CRUD/genre/read.php');
 ?>
 <body>
     <div class="container-fluid position-relative d-flex p-0">
@@ -27,18 +28,17 @@ include('inc/header.php');
                             </thead>
                             <tbody>
                             <?php
-                                $studios = $dbConn->getAllStudios();
-                                if ($studios) {
-                                    foreach ($studios as $studio) { ?>
-                                        <td><?=$studio['id']?></td>
-                                        <td><?=$studio['name']?></td>
-                                        <td><?=$studio['createDate']?></td>
-                                        <td><?=$studio['updateDate']?></td>
-                                        <td><a class="btn btn-sm btn-primary" href="editStudioForm.php">Detail</a></td>
+                                if ($genres) {
+                                    foreach ($genres as $genre) { ?>
+                                        <td><?=$genre['id']?></td>
+                                        <td><?=$genre['name']?></td>
+                                        <td><?=$genre['createDate']?></td>
+                                        <td><?=$genre['updateDate']?></td>
+                                        <td><a class="btn btn-sm btn-primary" href="studio_edit_form.php?id=<?=$genre['id']?>">Detail</a></td>
                                         </tr>
                                     <?php }
                                 } else {?>
-                                    <tr><td colspan='8'>Нет доступных данных</td></tr>
+                                    <tr><td colspan='5'>Нет доступных данных</td></tr>
                                 <?php }
                                 ?>
                             </tbody>

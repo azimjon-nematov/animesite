@@ -1,5 +1,11 @@
 <?php
 include('inc/header.php');
+include('./db/createConnectionWithDB.php');
+include('./CRUD/studio/read.php');
+$id = $_GET['id'];
+$sql = "SELECT * FROM `anime` WHERE id=$id";
+$stmt = $pdo->query($sql);
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <body>
     <div class="container-fluid position-relative d-flex p-0">
@@ -21,48 +27,54 @@ include('inc/header.php');
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-8">
                         <div class="bg-secondary rounded h-100 p-4">
-                            <h6 class="mb-4">Add anime Form</h6>
-                            <form action="./CRUD/anime/add.php" method="POST">
-
+                            <h6 class="mb-4">Edit studio Form</h6>
+                            <form action="./CRUD/anime/update.php" method="POST" enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label class="form-label">Название</label>
-                                    <input type="text" class="form-control" name="name">
+                                    <input type="text" class="form-control" name="title" value="<?=$result[0]['title']?>">
                                 </div>
-
                                 <div class="mb-3">
                                     <label class="form-label">Описание</label>
-                                    <textarea class="form-control" name="description"></textarea>
+                                    <textarea class="form-control" name="description"><?=$result[0]['desc']?></textarea>
                                 </div>
-
-
                                 <div class="mb-3">
                                     <label class="form-label">ID студии</label>
 
-                                    <select class="form-select form-select-sm mb-3" >
+                                    <select class="form-select form-select-sm mb-3" name="studio_id" >
                                         <option selected="">Open this select menu</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        <?php  
+
+                                        if ($studios) {
+                                            foreach ($studios as $studio) { ?>
+                                                <option <?=$studio['id'] == $result[0]['studio_id'] ? 'selected' : ''?> value="<?=$studio['id']?>"><?=$studio['name']?></option>
+                                            <?php }
+                                        }?>
                                     </select>
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <label class="form-label">Дата публикации</label>
-                                    <input type="date" class="form-control" name="releaseDate">
+                                    <input type="date" class="form-control" value="<?=$result[0]['releaseDate']?>" name="releaseDate">
                                 </div>
 
                                 <div class="mb-3">
                                     <label class="form-label">Возрастной рейтинг</label>
-                                    <input type="number" class="form-control" name="ageRating">
+                                    <input type="number" class="form-control" value="<?=$result[0]['ageLimit']?>" name="ageRating">
+                                    <input class="form-control" value="<?=$result[0]['id']?>" name="id" hidden>
                                 </div>
 
 
                                 <div class="mb-3">
                                     <label for="formFileSm" class="form-label">Выберите постер для аниме</label>
-                                    <input class="form-control form-control-sm bg-dark" name="coverImage" type="file">
+                                    <input class="form-control form-control-sm bg-dark" name="coverImage" value="<?=$result[0]['coverImage']?>" type="file">
                                 </div>
-                                
-                                <button type="submit" class="btn btn-primary">Добавить</button>
+
+
+                        
+                                <button type="submit" class="btn btn-primary">Обновить</button>
+                                <a href="./CRUD/anime/delete.php?id=<?=$result[0]['id']?>" class="btn btn-primary">
+                                    Удалить
+                                    </a>
                             </form>
                         </div>
                     </div>

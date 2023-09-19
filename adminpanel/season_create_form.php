@@ -1,5 +1,6 @@
 <?php
 include('inc/header.php');
+include('./CRUD/anime/read.php');
 ?>
 <body>
     <div class="container-fluid position-relative d-flex p-0">
@@ -21,14 +22,38 @@ include('inc/header.php');
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-8">
                         <div class="bg-secondary rounded h-100 p-4">
-                            <h6 class="mb-4">Форма добавления жанра</h6>
-                            <form action="./CRUD/genre/add.php" method="POST">
+                            <h6 class="mb-4">Add season Form</h6>
+                            <form action="./CRUD/season/create.php" method="POST" enctype="multipart/form-data">
 
                                 <div class="mb-3">
                                     <label class="form-label">Название</label>
-                                    <input type="text" class="form-control" name="name">
+                                    <input type="text" class="form-control" name="title">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">ID аниме</label>
+
+                                    <select class="form-select form-select-sm mb-3" name="anime_id" >
+                                        <option selected="">Open this select menu</option>
+                                        <?php  
+
+                                        if ($animes) {
+                                            foreach ($animes as $anime) { ?>
+                                                <option value="<?=$anime['id']?>"><?=$anime['title']?></option>
+                                            <?php }
+                                        } else {?>
+                                            <option>В базе еще нет anime</option>
+                                        <?php }
+                                        ?>
+                                    </select>
                                 </div>
                                 
+
+                                <div class="mb-3">
+                                    <label class="form-label">Order</label>
+                                    <input type="number" class="form-control" name="order">
+                                </div>
+
                                 <button type="submit" class="btn btn-primary">Добавить</button>
                             </form>
                         </div>

@@ -1,5 +1,13 @@
 <?php
 include('inc/header.php');
+include('./db/createConnectionWithDB.php');
+$id = $_GET['id'];
+$stmt = $pdo->prepare("SELECT * FROM studio WHERE id=:id");
+
+$stmt->bindParam(':id', $id);
+$stmt->execute();
+
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <body>
     <div class="container-fluid position-relative d-flex p-0">
@@ -21,15 +29,19 @@ include('inc/header.php');
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-8">
                         <div class="bg-secondary rounded h-100 p-4">
-                            <h6 class="mb-4">Add studio Form</h6>
-                            <form action="./CRUD/studio/add.php" method="POST">
+                            <h6 class="mb-4">Edit studio Form</h6>
+                            <form action="../adminpanel/CRUD/studio/update.php" method="POST">
 
                                 <div class="mb-3">
                                     <label class="form-label">Название</label>
-                                    <input type="text" class="form-control" name="name">
+                                    <input type="text" class="form-control" name="name" value="<?=$result[0]['name']?>">
+                                    <input type="text" class="form-control" value="<?=$result[0]['id']?>" hidden name="id">
                                 </div>
-
-                                <button type="submit" class="btn btn-primary">Добавить</button>
+                        
+                                <button type="submit" class="btn btn-primary">Обновить</button>
+                                <a href="./CRUD/studio/delete.php?id=<?=$result[0]['id']?>" class="btn btn-primary">
+                                    Удалить
+                                    </a>
                             </form>
                         </div>
                     </div>

@@ -9,14 +9,12 @@ function validateAndSanitize($data) {
 }
 
 $name = validateAndSanitize($_POST['name']);
-$id = validateAndSanitize($_POST['id']);
 
 if (empty($name)) {
     throw new Exception('Название должно быть заполненным.');
 }
 
-$stmt = $pdo->prepare("UPDATE studio SET name=:name,updateDate=NOW() WHERE id=:id");
+$stmt = $pdo->prepare("INSERT INTO `studio` (name, createDate) VALUES (:name, NOW())");
 $stmt->bindParam(':name', $name);
-$stmt->bindParam(':id', $id);
 $stmt->execute();
 header('Location: ../../studio_list.php');

@@ -1,5 +1,6 @@
 <?php
 include('inc/header.php');
+include('../adminpanel/CRUD/studio/read.php');
 ?>
 <body>
     <div class="container-fluid position-relative d-flex p-0">
@@ -19,8 +20,7 @@ include('inc/header.php');
                             <thead>
                                 <tr class="text-white">
                                     <th scope="col">ID</th>
-                                    <th scope="col">ID студии</th>
-                                    <th scope="col">ID жанра</th>
+                                    <th scope="col">Название</th>
                                     <th scope="col">Дата создания</th>
                                     <th scope="col">Дата изменения</th>
                                     <th scope="col">Действия</th>
@@ -28,15 +28,13 @@ include('inc/header.php');
                             </thead>
                             <tbody>
                             <?php
-                                $animeGenres = $dbConn->getAllAnimeGenres();
-                                if ($animeGenres) {
-                                    foreach ($animeGenres as $animeGenre) { ?>
-                                        <td><?=$animeGenre['id']?></td>
-                                        <td><?=$animeGenre['anime_id']?></td>
-                                        <td><?=$animeGenre['genre_id']?></td>
-                                        <td><?=$animeGenre['createDate']?></td>
-                                        <td><?=$animeGenre['updateDate']?></td>
-                                        <td><a class="btn btn-sm btn-primary" href="editAnimeGenreForm.php">Detail</a></td>
+                                if ($studios) {
+                                    foreach ($studios as $studio) { ?>
+                                        <td><?=$studio['id']?></td>
+                                        <td><?=$studio['name']?></td>
+                                        <td><?=$studio['createDate']?></td>
+                                        <td><?=$studio['updateDate']?></td>
+                                        <td><a class="btn btn-sm btn-primary" href="studio_edit_form.php?id=<?=$studio['id']?>">Detail</a></td>
                                         </tr>
                                     <?php }
                                 } else {?>
