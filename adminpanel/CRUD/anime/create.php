@@ -42,7 +42,7 @@ if (!is_numeric($ageLimit)) {
     exit;
 }
 
-$target_dir = "../../uploads/"; // Путь к директории должен быть корректным, используя относительный путь
+$target_dir = "../../uploads/";
 if (!file_exists($target_dir)) {
     mkdir($target_dir, 0777, true);
 }

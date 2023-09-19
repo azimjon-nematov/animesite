@@ -14,8 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['xml_file'])) {
                     $name = (string)$record->name;
                     $createDate = (string)$record->createDate;
                     $updateDate = !empty($record->updateDate) ? (string)$record->updateDate : null; 
-        
-                    // Вставка данных в базу данных
+                    
                     $stmt = $pdo->prepare("INSERT INTO test (name, createDate, updateDate) VALUES (:name, :createDate, :updateDate)");
                     $stmt->bindParam(':name', $name);
                     $stmt->bindParam(':createDate', $createDate);
