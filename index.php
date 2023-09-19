@@ -1,7 +1,5 @@
 <?php 
-//print_r($_SESSION);
 include('db.php');
-
 include('inc/head.php');
 ?>
 
@@ -78,7 +76,7 @@ include('inc/head.php');
 						</div>
 						<!-- end card -->
 					</div>
-					
+
 					<div class="item">
 						<!-- card -->
 						<div class="card card--big">

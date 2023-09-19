@@ -1,5 +1,6 @@
 <?php 
 include 'db.php';
+include 'Log.php';
 
 session_start();
 $session_id = session_id();
@@ -32,6 +33,7 @@ if(isset($_POST['name']) && isset($_POST['login']) && isset($_POST['password']))
 			$_SESSION['login'] = $login;
 			// $_SESSION['password'] = md5($password);
 		} catch (Exception $e) {
+			new Log($e);
 			$_SESSION['errorMessage']['message'] = $e->getMessage();
 		}
 

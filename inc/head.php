@@ -66,12 +66,7 @@ $session_id = session_id();
 								<ul class="header__nav">
 									<!-- dropdown -->
 									<li class="header__nav-item">
-										<a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuHome" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
-
-										<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuHome">
-											<li><a href="index.html">Home slideshow bg</a></li>
-											<li><a href="index2.html">Home static bg</a></li>
-										</ul>
+										<a class="dropdown-toggle header__nav-link" href="index.php" role="button" id="dropdownMenuHome" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
 									</li>
 									<!-- end dropdown -->
 
@@ -88,13 +83,21 @@ $session_id = session_id();
 									</li>
 									<!-- end dropdown -->
 
-									<li class="header__nav-item">
+									<!-- <li class="header__nav-item">
 										<a href="pricing.html" class="header__nav-link">Pricing Plan</a>
 									</li>
 
 									<li class="header__nav-item">
 										<a href="faq.html" class="header__nav-link">Help</a>
+									</li> -->
+
+									<?php if ($isRegistred): ?>
+
+									<li class="header__nav-item">
+										<a href="profile.php" class="header__nav-link">Профиль</a>
 									</li>
+
+									<?php endif ?>
 
 									<li class="header__nav-item">
 										<a href="adminpanel/index.php" class="header__nav-link">Admin panel</a>
@@ -105,7 +108,7 @@ $session_id = session_id();
 										<a class="dropdown-toggle header__nav-link header__nav-link--more" href="#" role="button" id="dropdownMenuMore" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-ios-more"></i></a>
 
 										<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuMore">
-											<li><a href="about.html">About</a></li>
+											<li><a href="about.php">About</a></li>
 											<li><a href="signin.html">Sign In</a></li>
 											<li><a href="signup.html">Sign Up</a></li>
 											<li><a href="404.html">404 Page</a></li>

@@ -4,15 +4,6 @@ define('USERNAME', 'root');
 define('PASSWORD', 'root');
 define('DATABASE', 'animesite');
 
-// function SELECT($sql) {
-// 	$db = @mysqli_connect(HOST, USERNAME, PASSWORD, DATABASE) or die('ошибка соединение с БД');
-// 	mysqli_set_charset($db, 'utf8');
-//     $result = mysqli_fetch_all(mysqli_query($db, $sql));
-// 	$db->close();
-
-// 	return $result;
-// }
-
 function SELECT($sql, $params = "", $data = array()) {
 	$db = @mysqli_connect(HOST, USERNAME, PASSWORD, DATABASE) or die('ошибка соединение с БД');
 	mysqli_set_charset($db, 'utf8');
@@ -56,8 +47,6 @@ function executeAndSelectId($query, $params = "", $data = array()) {
 		$statement->bind_param($params, ...$data);
 	}
 	$statement->execute();
-	// var_dump($statement);
-	// echo "<br/>========================<br/>"
 	$insert_id = $statement->insert_id;
 
 	if($statement->errno == 0) {
@@ -65,10 +54,12 @@ function executeAndSelectId($query, $params = "", $data = array()) {
 		$db->close();
 		return $insert_id;
 	}
+	$errno = $statement->errno;
+	$error = $statement->error;
 	$statement->close();
 	$db->close();
 
-	throw new Exception('error code: '. $statement->errno . '; error message: ' . $statement->error);
+	throw new Exception('error code: '. $errno . '; error message: ' . $error);
 }
 
 
