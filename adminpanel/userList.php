@@ -1,5 +1,6 @@
 <?php
 include('inc/header.php');
+include '../db.php';
 ?>
 <body>
     <div class="container-fluid position-relative d-flex p-0">
@@ -8,7 +9,7 @@ include('inc/header.php');
             <?php include('./inc/navBar.php'); ?>
 
 
-            <!-- Anime List Start -->
+            <!-- user List Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
@@ -19,10 +20,11 @@ include('inc/header.php');
                             <thead>
                                 <tr class="text-white">
                                     <th scope="col">ID</th>
-                                    <th scope="col">Название</th>
+                                    <th scope="col">Имя</th>
                                     <th scope="col">Логин</th>
                                     <th scope="col">Пароль</th>
                                     <th scope="col">Фото</th>
+                                    <th scope="col">Админ</th>
                                     <th scope="col">Дата создания</th>
                                     <th scope="col">Дата изменения</th>
                                     <th scope="col">Действия</th>
@@ -30,17 +32,19 @@ include('inc/header.php');
                             </thead>
                             <tbody>
                             <?php
-                                $animes = $dbConn->getAllAnimes();
-                                if ($animes) {
-                                    foreach ($animes as $anime) { ?>
-                                        <td><?=$anime['id']?></td>
-                                        <td><?=$anime['title']?></td>
-                                        <td><?=$anime['releaseDate']?></td>
-                                        <td><?=$anime['ageLimit']?>+</td>
-                                        <td><?=$anime['coverImage']?></td>
-                                        <td><?=$anime['createDate']?></td>
-                                        <td><?=$anime['updateDate']?></td>
-                                        <td><a class="btn btn-sm btn-primary" href="editAnimeForm.php">Detail</a></td>
+                                $users = SELECT("SELECT * FROM user");
+                                if (count($users) > 0) {
+                                    foreach ($users as $user) { ?>
+                                        <tr>
+                                        <td><?=$user['id']?></td>
+                                        <td><?=$user['name']?></td>
+                                        <td><?=$user['login']?></td>
+                                        <td><?=$user['passwordHash']?></td>
+                                        <td><?=$user['profileImage']?></td>
+                                        <td><?=$user['isAdmin']?></td>
+                                        <td><?=$user['createDate']?></td>
+                                        <td><?=$user['updateDate']?></td>
+                                        <td><a class="btn btn-sm btn-primary" href="editUserForm.php">Detail</a></td>
                                         </tr>
                                     <?php }
                                 } else {?>
@@ -50,6 +54,33 @@ include('inc/header.php');
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-white">
+                                    <th scope="col">Имя</th>
+                                    <th scope="col">Логин</th>
+                                    <th scope="col">Пароль</th>
+                                    <th scope="col">Фото</th>
+                                    <th scope="col">Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <form action="CRUD/anime/add.php" method="POST">
+                                    <td><input type="text" name="name"></td>
+                                    <td><input type="text" name="login"></td>
+                                    <td><input type="text" name="passwordHash"></td>
+                                    <td><input type="text" name="profileImage"></td>
+                                    <td><input type="text" name="isAdmin"></td>
+                                    <td><button type="submit" class="btn btn-primary">Добавить</button></td>
+                                    </form>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
             <!-- Recent Sales End -->

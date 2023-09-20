@@ -2,11 +2,10 @@
 
 $name = $_POST['name'];
 $description = $_POST['description'];
-$inputDate = $_POST['date'];
-$enteredDate = new DateTime($inputDate);
-$currentDate = new DateTime();
-$ageRating = $_POST['ageRating'];
-$coverImage = $_POST['coverImage'];
+$inputDate = $_POST['login'];
+$ageRating = $_POST['passwordHash'];
+$coverImage = $_POST['profileImage'];
+$coverImage = $_POST['isAdmin'];
 
 if ($enteredDate > $currentDate) {
     throw new Exception("Ошибка: Введенная дата больше текущей даты.");

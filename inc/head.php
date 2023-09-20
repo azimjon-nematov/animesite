@@ -58,17 +58,16 @@ $session_id = session_id();
 
 
 								<?php 
-									$isRegistred = empty($_SESSION['id']);
+									$isRegistred = !empty($_SESSION['id']);
 								?>
 
 
 								<!-- header nav -->
 								<ul class="header__nav">
-									<!-- dropdown -->
+
 									<li class="header__nav-item">
-										<a class="dropdown-toggle header__nav-link" href="index.php" role="button" id="dropdownMenuHome" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
+										<a href="index.php" class="header__nav-link">Home</a>
 									</li>
-									<!-- end dropdown -->
 
 									<!-- dropdown -->
 									<li class="header__nav-item">
@@ -97,11 +96,11 @@ $session_id = session_id();
 										<a href="profile.php" class="header__nav-link">Профиль</a>
 									</li>
 
-									<?php endif ?>
-
 									<li class="header__nav-item">
 										<a href="adminpanel/index.php" class="header__nav-link">Admin panel</a>
 									</li>
+
+									<?php endif ?>
 
 									<!-- dropdown -->
 									<li class="dropdown header__nav-item">
