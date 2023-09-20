@@ -72,14 +72,13 @@ $session_id = session_id();
 
 									<!-- dropdown -->
 									<li class="header__nav-item">
-										<a class="dropdown-toggle header__nav-link" href="#" role="button" id="dropdownMenuCatalog" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Catalog</a>
+										<a class="header__nav-link" href="catalog_grid.php" role="button"  aria-haspopup="true" aria-expanded="false">Movies</a>
+									</li>
+									<!-- end dropdown -->
 
-										<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuCatalog">
-											<li><a href="catalog1.html">Catalog Grid</a></li>
-											<li><a href="catalog2.html">Catalog List</a></li>
-											<li><a href="details1.html">Details Movie</a></li>
-											<li><a href="details2.html">Details TV Series</a></li>
-										</ul>
+									<!-- dropdown -->
+									<li class="header__nav-item">
+										<a class="header__nav-link" href="catalog2.php" role="button"  aria-haspopup="true" aria-expanded="false">Series</a>
 									</li>
 									<!-- end dropdown -->
 

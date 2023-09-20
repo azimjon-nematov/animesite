@@ -17,29 +17,35 @@ $releaseDate = validateAndSanitize($_POST['releaseDate']);
 $ageLimit = validateAndSanitize($_POST['ageRating']);
 $uniqueImageCover = "";
 
-if (empty($title) || empty($desc)) {
-    $_SESSION['error_message'] = 'Заголовок и описание должны быть заполнены.';
-    header('Location: ../../anime_create_form.php');
-    exit;
+try {
+    if (empty($title) || empty($desc)) {
+        $_SESSION['error_message'] = 'Заголовок и описание должны быть заполнены.';
+        header('Location: ../../anime_create_form.php');
+        exit;
+    }
+    
+    if (!is_numeric($studio_id)) {
+        $_SESSION['error_message'] = 'ID студии должен быть числом.';
+        header('Location: ../../anime_create_form.php');
+        exit;
+    }
+    
+    $dateParts = explode('-', $releaseDate);
+    if (count($dateParts) != 3 || !checkdate($dateParts[1], $dateParts[2], $dateParts[0])) {
+        $_SESSION['error_message'] = 'Неправильный формат даты релиза.';
+        header('Location: ../../anime_create_form.php');
+        exit;
+    }
+    
+    if (!is_numeric($ageLimit)) {
+        $_SESSION['error_message'] = 'Возрастное ограничение должно быть числом.';
+        header('Location: ../../anime_create_form.php');
+        exit;
+    }
 }
-
-if (!is_numeric($studio_id)) {
-    $_SESSION['error_message'] = 'ID студии должен быть числом.';
-    header('Location: ../../anime_create_form.php');
-    exit;
-}
-
-$dateParts = explode('-', $releaseDate);
-if (count($dateParts) != 3 || !checkdate($dateParts[1], $dateParts[2], $dateParts[0])) {
-    $_SESSION['error_message'] = 'Неправильный формат даты релиза.';
-    header('Location: ../../anime_create_form.php');
-    exit;
-}
-
-if (!is_numeric($ageLimit)) {
-    $_SESSION['error_message'] = 'Возрастное ограничение должно быть числом.';
-    header('Location: ../../anime_create_form.php');
-    exit;
+catch (Exception $e) {
+    new Log($e);
+    $_SESSION['errorMessage']['message'] = $e->getMessage();
 }
 
 $target_dir = "../../uploads/";
