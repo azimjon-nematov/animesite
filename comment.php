@@ -6,12 +6,17 @@ include 'db.php';
 session_start();
 $session_id = session_id();
 
-if(empty($_POST["animeId"]) || empty($_POST["text"]) || empty($_SESSION['user_id'])) {
+if(empty($_POST["animeId"]) || empty($_SESSION['user_id'])) {
+	http_response_code(400);
 	echo "Error";
 	die();
 }
+if(empty($_POST["text"])) {
+	http_response_code(400);
+	die();
+}
 $animeId = $_POST["animeId"];
-$text = $_POST["text"];
+$text =  htmlspecialchars($_POST["text"]);
 $user_id = $_SESSION["user_id"];
 
 $sql = "INSERT INTO `comment`(`text`, anime_id, user_id, parent_id, createDate) VALUES(?, ?, ?, NULL, NOW())";
@@ -20,6 +25,7 @@ try {
 	$commentId = executeAndSelectId($sql, 'sii', [$text, $animeId, $user_id]);
 } catch (Throwable $e) {
 	new Log($e);
+	http_response_code(500);
 	echo $e->getMessage();
 	die();
 }
@@ -33,7 +39,7 @@ $userName = empty($_SESSION['user_id']) ? "unknown" : $_SESSION['user_id'];
 		<span class="comments__name"><?=$userName?></span>
 		<span class="comments__time"><?=$now->format("d.m.Y, H:i")?></span>
 	</div>
-	<p class="comments__text"><?=$text?></p>
+	<p class="comments__text"><?$text?></p>
 	<div class="comments__actions">
 		<button type="button"><i class="icon ion-ios-share-alt"></i>Reply</button>
 	</div>

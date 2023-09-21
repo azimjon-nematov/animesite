@@ -453,7 +453,6 @@ $comments = SELECT($sql, 'i', [$id]);
 										  return div.firstChild;
 										}
 										function addComment() {
-											console.log('addComment');
 											var xhr = new XMLHttpRequest();
 											xhr.open('POST', 'comment.php');
 											var animeId = encodeURIComponent(document.getElementById("animeId").value);
@@ -461,12 +460,19 @@ $comments = SELECT($sql, 'i', [$id]);
 											xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 											xhr.send('animeId='+animeId+'&text='+text);
 											xhr.onreadystatechange = handleFunc;
+
 											function handleFunc() {
 												if(xhr.readyState === 4 && xhr.status === 200) {
-													console.log(xhr.responseText);
 													var ul = document.getElementById("list");
 													ul.appendChild(createElementFromHTML(xhr.responseText));
 													document.getElementById("text").value = '';
+													var li = document.getElementById("nocomments");
+													if (typeof(li) != 'undefined' && li != null)
+													{
+														li.parentNode.removeChild(li);
+													}
+												} else {
+													alert(xhr.responseText);
 												}
 											};
 										}
