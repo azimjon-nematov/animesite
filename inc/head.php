@@ -123,7 +123,7 @@ $session_id = session_id();
 										<i class="icon ion-ios-search"></i>
 									</button>
 
-									<?php if ($isRegistred): ?>
+									<?php if (!$isRegistred): ?>
 
 									<a href="signin.php" class="header__sign-in">
 										<i class="icon ion-ios-log-in"></i>

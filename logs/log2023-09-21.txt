@@ -1,0 +1,22 @@
+2023-09-21 05-26-55.100300
+error text: Call to undefined function executeAndSelectId()
+error code: 0
+in file: E:\Programs\OpenServer\domains\animesite\comment.php
+in line: 19
+trace: #0 {main}
+==========================================
+2023-09-21 05-28-48.350100
+error text: Call to undefined function executeAndSelectId()
+error code: 0
+in file: E:\Programs\OpenServer\domains\animesite\comment.php
+in line: 19
+trace: #0 {main}
+==========================================
+2023-09-21 05-30-17.572800
+error text: error code: 1048; error message: Column 'user_id' cannot be null
+error code: 0
+in file: E:\Programs\OpenServer\domains\animesite\db.php
+in line: 62
+trace: #0 E:\Programs\OpenServer\domains\animesite\comment.php(20): executeAndSelectId()
+#1 {main}
+==========================================
