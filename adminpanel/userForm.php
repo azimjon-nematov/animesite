@@ -1,5 +1,18 @@
 <?php
+include('../db.php');
+
+$session_id = session_id();
+if ($session_id == "") {
+    session_start();
+    $session_id = session_id();
+}
+
 include('inc/header.php');
+
+$id = $_GET['id'];
+$sql = "SELECT * FROM `user` WHERE id=?";
+$user = SELECT($sql, "i", [$id])[0];
+
 ?>
 <body>
     <div class="container-fluid position-relative d-flex p-0">
@@ -21,48 +34,41 @@ include('inc/header.php');
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-8">
                         <div class="bg-secondary rounded h-100 p-4">
-                            <h6 class="mb-4">Add anime Form</h6>
-                            <form action="./CRUD/anime/add.php" method="POST">
-
+                            <h6 class="mb-4">Edit studio Form</h6>
+                            <form action="CRUD/user/update.php" method="POST">
                                 <div class="mb-3">
-                                    <label class="form-label">Название</label>
-                                    <input type="text" class="form-control" name="name">
+                                    <label class="form-label">Имя</label>
+                                    <input class="form-control" value="<?=$user['id']?>" name="id" hidden>
+                                    <input type="text" class="form-control" name="name" value="<?=$user['name']?>">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Описание</label>
-                                    <textarea class="form-control" name="description"></textarea>
-                                </div>
-
-
-                                <div class="mb-3">
-                                    <label class="form-label">ID студии</label>
-
-                                    <select class="form-select form-select-sm mb-3" >
-                                        <option selected="">Open this select menu</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                    </select>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <label class="form-label">Дата публикации</label>
-                                    <input type="date" class="form-control" name="releaseDate">
+                                    <label class="form-label">Логин</label>
+                                    <input type="text" class="form-control" name="login" value="<?=$user['login']?>">
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">Возрастной рейтинг</label>
-                                    <input type="number" class="form-control" name="ageRating">
+                                    <label class="form-label">Password Hash</label>
+                                    <input type="text" class="form-control" name="passwordHash" value="<?=$user['passwordHash']?>">
                                 </div>
-
 
                                 <div class="mb-3">
-                                    <label for="formFileSm" class="form-label">Выберите постер для аниме</label>
-                                    <input class="form-control form-control-sm bg-dark" name="coverImage" type="file">
+                                    <label class="form-label">Ссылка на картинку</label>
+                                    <input type="text" class="form-control" name="profileImage" value="<?=$user['profileImage']?>">
                                 </div>
-                                
-                                <button type="submit" class="btn btn-primary">Добавить</button>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Является админом</label>
+                                    <?php echo '<input class="form-check-input" name="isAdmin" type="checkbox" ' . ($user['isAdmin'] == 1 ? 'checked' : '') . '>'; ?>
+                                    <!-- <input class="form-check-input" name="isAdmin" type="checkbox"> -->
+                                </div>
+
+
+                        
+                                <button type="submit" class="btn btn-primary">Обновить</button>
+                                <a href="./CRUD/user/delete.php?id=<?=$user['id']?>" class="btn btn-primary">
+                                    Удалить
+                                    </a>
                             </form>
                         </div>
                     </div>

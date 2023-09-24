@@ -1,6 +1,6 @@
 <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
-                <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <a href="index.php" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>DarkPan</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
@@ -56,7 +56,8 @@
                         <a href="userList.php" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Пользователи</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="userList.php" class="dropdown-item">Список пользователей</a>
-                            <a href="addUserForm.php" class="dropdown-item">Добавить пользователя</a>
+                            <a href="xml/UsersExportXml.php" class="dropdown-item">Экспорт пользователей</a>
+                            <a href="usersImportXml.php" class="dropdown-item">Импорт пользователей</a>
                         </div>
                     </div>
 

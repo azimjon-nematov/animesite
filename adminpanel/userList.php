@@ -44,7 +44,9 @@ include '../db.php';
                                         <td><?=$user['isAdmin']?></td>
                                         <td><?=$user['createDate']?></td>
                                         <td><?=$user['updateDate']?></td>
-                                        <td><a class="btn btn-sm btn-primary" href="editUserForm.php">Detail</a></td>
+                                        <td>
+                                            <?php echo '<a class="btn btn-sm btn-primary" href="userForm.php?id=' . $user['id'] . '">Detail</a>'; ?>
+                                        </td>
                                         </tr>
                                     <?php }
                                 } else {?>

@@ -1,41 +1,10 @@
 <?php 
 include('db.php');
-include('inc/head.php');
-
-
-$host = 'localhost';
-$db = 'animesite';
-$user = 'root';
-$password = 'root';
-
-$pdo = new PDO("mysql:host=$host;dbname=$db", $user, $password);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-$sql = "SELECT * FROM genre";
-$stmt = $pdo->query($sql);
-$genres = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-$sql = "SELECT a.id 'id', a.title, a.`desc`, s.`name` as 'studio', a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON a.studio_id = s.id";
-
-$animes = SELECT($sql);
-
-for($i = 0; $i < count($animes); ++$i) {
-	$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
-	$animes[$i]['genres'] = SELECT($sql, 'i', [$animes[$i]['id']]);
+$session_id = session_id();
+if ($session_id == "") {
+	session_start();
+	$session_id = session_id();
 }
-
-
-
-
-
-
-
-
-
-// Замените эти переменные данными из вашего приложения или базы данных
-$totalPages = 10; // Общее количество страниц
-$current_page = isset($_GET['page']) ? max(1, min((int)$_GET['page'], $totalPages)) : 1;
 
 // Функция для генерации ссылок на страницы
 function generatePaginationLinks($totalPages, $currentPage) {
@@ -66,6 +35,81 @@ function generatePaginationLinks($totalPages, $currentPage) {
 }
 
 
+if ("application/x-www-form-urlencoded" == $_SERVER["CONTENT_TYPE"] && isset($_POST['searchText'])) {
+	$searchText = '%' . $_POST['searchText'] . '%';
+	$sql = "SELECT a.id 'id', a.title, a.`desc`, s.`name` as 'studio', a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON a.studio_id = s.id WHERE a.title LIKE ?";
+
+	$animes = SELECT($sql, "s", [$searchText]);
+
+	for($i = 0; $i < count($animes); ++$i) {
+		$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
+		$animes[$i]['genres'] = SELECT($sql, 'i', [$animes[$i]['id']]);
+	}
+
+	foreach($animes as $anime): ?>
+		<!-- card -->
+	<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+		<div class="card">
+			<div class="card__cover">
+				<img src="assets/img/covers/cover.jpg" alt="">
+				<a href="#" class="card__play">
+					<i class="icon ion-ios-play"></i>
+				</a>
+			</div>
+			<div class="card__content">
+				<h3 class="card__title"><a href="details.php?id=<?=$anime['id']?>"><?=$anime["title"]?></a></h3>
+				<span class="card__category">
+					<?php 
+						foreach($anime['genres'] as $genre) {
+							echo '<a href="#">' . $genre["name"] . '</a>';
+						}
+					?>
+				</span>
+				<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
+			</div>
+		</div>
+	</div>
+	<!-- end card -->
+	<?php endforeach; ?>
+				<!-- paginator -->
+				<div class="col-12">
+
+						<ul class="paginator">
+							<?php 
+							$totalPages = count($animes) / 30;
+							echo generatePaginationLinks($totalPages, 1); 
+							?>
+        				</ul>
+					
+				</div>
+				<!-- end paginator -->
+	<?php
+	exit();
+}
+
+
+
+
+
+$genres = SELECT( "SELECT * FROM genre");
+
+$sql = "SELECT a.id 'id', a.title, a.`desc`, s.`name` as 'studio', a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON a.studio_id = s.id";
+
+$animes = SELECT($sql);
+
+for($i = 0; $i < count($animes); ++$i) {
+	$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
+	$animes[$i]['genres'] = SELECT($sql, 'i', [$animes[$i]['id']]);
+}
+
+
+// Замените эти переменные данными из вашего приложения или базы данных
+$totalPages = 10; // Общее количество страниц
+$current_page = isset($_GET['page']) ? max(1, min((int)$_GET['page'], $totalPages)) : 1;
+
+
+
+
 
 
 
@@ -75,15 +119,40 @@ function generatePaginationLinks($totalPages, $currentPage) {
 
 
 ?>
+
+<?php include 'inc/head.php'; ?>
+
+<script type="text/javascript">
+	function searchAnimes() {
+		var searchText = encodeURIComponent(document.getElementById("search").value);
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '');
+		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhr.onreadystatechange = handleFunc;
+		function handleFunc() {
+			if(xhr.readyState === 4 && xhr.status === 200) {
+				var animeContainer = document.getElementById("animeContainer");
+				//document.getElementById("text").value = '';
+				animeContainer.innerHTML = xhr.responseText;
+
+			} else {
+				// alert(xhr.readyState);
+				// alert(xhr.status);
+				// alert(xhr.responseText);
+			}
+		};
+		xhr.send('searchText='+searchText);
+	}
+</script>
 		<!-- header search -->
-		<form action="#" class="header__search">
+		<form class="header__search">
 			<div class="container">
 				<div class="row">
 					<div class="col-12">
 						<div class="header__search-content">
-							<input type="text" placeholder="Search for a movie, TV Series that you are looking for">
+							<input id="search" onchange="searchAnimes()" oncvaluechange="searchAnimes()" name="search" type="text" placeholder="Search for a movie, TV Series that you are looking for">
 
-							<button type="button">search</button>
+							<button onclick="searchAnimes()" type="button">search</button>
 						</div>
 					</div>
 				</div>
@@ -210,12 +279,12 @@ function generatePaginationLinks($totalPages, $currentPage) {
 	<!-- catalog -->
 	<div class="catalog">
 		<div class="container">
-			<div class="row">
+			<div id="animeContainer" class="row">
 
 
 
-		<?php for ($i=0; $i < 6; $i++):
-		foreach($animes as $anime): ?>
+				<?php for ($i=0; $i < 6; $i++):
+				foreach($animes as $anime): ?>
 					<!-- card -->
 				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 					<div class="card">

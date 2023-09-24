@@ -1,6 +1,9 @@
 <?php 
-session_start();
 $session_id = session_id();
+if ($session_id == "") {
+	session_start();
+	$session_id = session_id();
+}
 
 ?>
 <!DOCTYPE html>

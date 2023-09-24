@@ -1,6 +1,16 @@
 <?php 
 include('db.php');
 include('inc/head.php');
+
+$sql = "SELECT a.id, e.id 'epId', a.title, a.coverImage, e.createDate FROM episode e LEFT JOIN season s ON e.season_id = s.id LEFT JOIN anime a ON s.anime_id = a.id WHERE e.isFilm = 1 ORDER BY e.createDate DESC";
+
+$films = SELECT($sql);
+
+for($i = 0; $i < count($films); ++$i) {
+	$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
+	$films[$i]['genres'] = SELECT($sql, 'i', [$films[$i]['id']]);
+}
+
 ?>
 
 
@@ -44,7 +54,7 @@ include('inc/head.php');
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
-				<h1 class="home__title"><b>NEW FILMS</b> OF THIS SEASON</h1>
+				<h1 class="home__title"><b>НОВЫЕ ФИЛЬМЫ</b> ЭТОГО СЕЗОНА</h1>
 
 				<button class="home__nav home__nav--prev" type="button">
 					<i class="icon ion-ios-arrow-round-back"></i>
@@ -56,89 +66,33 @@ include('inc/head.php');
 
 			<div class="col-12">
 				<div class="owl-carousel home__carousel">
-					<div class="item">
-						<!-- card -->
-						<div class="card card--big">
-							<div class="card__cover">
-								<img src="assets/img/posters/tokyo ghoul.jpg" alt="">
-								<a href="#" class="card__play">
-									<i class="icon ion-ios-play"></i>
-								</a>
-							</div>
-							<div class="card__content">
-								<h3 class="card__title"><a href="#">Tokio ghoul</a></h3>
-								<span class="card__category">
-									<a href="#">Action</a>
-									<a href="#">Triler</a>
-								</span>
-								<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
-							</div>
-						</div>
-						<!-- end card -->
-					</div>
 
+					<?php foreach ($films as $film): ?>	
 					<div class="item">
 						<!-- card -->
 						<div class="card card--big">
 							<div class="card__cover">
-								<img src="assets/img/posters/demon_slayer.jpg" alt="">
+								<?php echo '<img src="' . $film['coverImage'] . '" alt="">'; ?>
 								<a href="#" class="card__play">
 									<i class="icon ion-ios-play"></i>
 								</a>
 							</div>
 							<div class="card__content">
-								<h3 class="card__title"><a href="#">Demon slayer</a></h3>
+								<h3 class="card__title"><a href="#"><?php echo $film['title']; ?></a></h3>
 								<span class="card__category">
-									<a href="#">Action</a>
-									<a href="#">Triler</a>
+									<?php 
+										foreach($film['genres'] as $genre) {
+											echo '<a href="#">' . $genre["name"] . '</a>';
+										}
+									?>
 								</span>
 								<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
 							</div>
 						</div>
 						<!-- end card -->
 					</div>
+					<?php endforeach ?>
 
-					<div class="item">
-						<!-- card -->
-						<div class="card card--big">
-							<div class="card__cover">
-								<img src="assets/img/posters/attack on titan.jpg" alt="">
-								<a href="#" class="card__play">
-									<i class="icon ion-ios-play"></i>
-								</a>
-							</div>
-							<div class="card__content">
-								<h3 class="card__title"><a href="#">Attack on Titan</a></h3>
-								<span class="card__category">
-									<a href="#">Action</a>
-									<a href="#">Triler</a>
-								</span>
-								<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
-							</div>
-						</div>
-						<!-- end card -->
-					</div>
-					
-					<div class="item">
-						<!-- card -->
-						<div class="card card--big">
-							<div class="card__cover">
-								<img src="assets/img/posters/bocchi_the_rock.jpg" alt="">
-								<a href="#" class="card__play">
-									<i class="icon ion-ios-play"></i>
-								</a>
-							</div>
-							<div class="card__content">
-								<h3 class="card__title"><a href="#">Bocchi the Rock</a></h3>
-								<span class="card__category">
-									<a href="#">Action</a>
-									<a href="#">Triler</a>
-								</span>
-								<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
-							</div>
-						</div>
-						<!-- end card -->
-					</div>
 				</div>
 			</div>
 		</div>

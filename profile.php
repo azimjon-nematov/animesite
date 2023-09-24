@@ -2,22 +2,10 @@
 include 'db.php';
 include 'inc/head.php';
 
-$xmlstr = "
-<?xml version='1.0' standalone='yes'?>
-<user>
-	<name>User name</name>
-	<age>18</age>
-	<descriptions>
-		<paragraph>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using.</paragraph>
-		<paragraph>'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</paragraph>
-		<paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</paragraph>
-		<paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</paragraph>
-	</descriptions>
-</user>
-";
+$xmlstr = "<?xml version='1.0' standalone='yes'?><user> <name>User name</name> <age>18</age> <descriptions> <paragraph>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using.</paragraph> <paragraph>'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</paragraph> <paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</paragraph> <paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</paragraph> </descriptions> </user>";
 
-$xmlDoc = new DOMDocument();
-$xmlDoc->load($xmlstr);
+//$xmlDoc = new DOMDocument();
+$user = simplexml_load_string($xmlstr);
 // echo $xmlstr;
 // echo $xmlDoc->saveXML();
 // die();
@@ -74,17 +62,19 @@ $xmlDoc->load($xmlstr);
 			<!-- end section title -->
 			<div class="col-12">
 				<?php 
-				$mod=$xmlDoc->getElementsByTagName("descriptions");
+				//$mod=$xmlDoc->getElementsByTagName("user");
 
-				Foreach ($mod as $element){
+				// foreach ($mod as $element){
+				//     echo $element->nodeValue." ".$element->nodeName;
+				// }
+				echo $user->name;
+				// print_r($user);
+				// $x = $xmlDoc->documentElement;
+				foreach ($user->paragraph as $item) {
 					echo '<p class="section__text">';
-				    echo $element->nodeValue." ".$element->nodeName;
+					echo $item;
 					echo "</p>";
 				}
-				// $x = $xmlDoc->documentElement;
-				// foreach ($x->childNodes as $item) {
-				// 	echo $item->nodeName . " = " . $item->nodeValue;
-				// }
 
 				?>
 			</div>
