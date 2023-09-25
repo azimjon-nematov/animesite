@@ -70,6 +70,15 @@
                         </div>
                     </div>
 
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Episodes</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="episode_list.php" class="dropdown-item">Список episode</a>
+                            <a href="episode_create_form.php" class="dropdown-item">Добавить episode</a>
+                        </div>
+                    </div>
+
                     <div class="nav-item dropdown">
                         <a href="DBFromXML.php" class="nav-link" ><i class="fa fa-laptop me-2"></i>Импорт</a>
                     </div>

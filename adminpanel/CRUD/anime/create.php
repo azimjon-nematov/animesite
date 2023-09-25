@@ -15,7 +15,7 @@ $desc = validateAndSanitize($_POST['description']);
 $studio_id = validateAndSanitize($_POST['studio_id']);
 $releaseDate = validateAndSanitize($_POST['releaseDate']);
 $ageLimit = validateAndSanitize($_POST['ageRating']);
-$uniqueImageCover = "";
+
 
 try {
     if (empty($title) || empty($desc)) {
@@ -47,49 +47,41 @@ catch (Exception $e) {
     new Log($e);
     $_SESSION['errorMessage']['message'] = $e->getMessage();
 }
-
-$target_dir = "../../uploads/";
-if (!file_exists($target_dir)) {
-    mkdir($target_dir, 0777, true);
-}
-
-$uniqueImageCover = strtolower(pathinfo($_FILES["coverImage"]["name"], PATHINFO_EXTENSION));
-$uniqueImageCover = uniqid() . "." . $uniqueImageCover;
-
-$target_file = $target_dir . $uniqueImageCover;
+//  IMAGE TARGET DIR
+$photo_target_dir = "../../../upload/coverImages/";
+$extension = strtolower(pathinfo($_FILES["coverImage"]["name"], PATHINFO_EXTENSION));
+$unique_filename = uniqid().$_FILES["coverImage"]["name"];
+$image_target_file = $photo_target_dir . $unique_filename;
 $uploadOk = 1;
 
-if (isset($_FILES["coverImage"])) {
-    $check = getimagesize($_FILES["coverImage"]["tmp_name"]);
-    if ($check !== false) {
-        echo "Файл является изображением - " . $check["mime"] . ".";
-        $uploadOk = 1;
-    } else {
-        echo "Файл не является изображением.";
-        $uploadOk = 0;
-    }
+if(isset($_POST["submit"])) {
+  $check = getimagesize($_FILES["coverImage"]["tmp_name"]);
+  if($check !== false) {
+    echo "File is an image - " . $check["mime"] . ".";
+    $uploadOk = 1;
+  } else {
+    echo "File is not an image.";
+    $uploadOk = 0;
+  }
 }
 
-if ($_FILES["coverImage"]["size"] == 0) {
-    echo "Файл не был загружен.";
-    $uploadOk = 0;
-}
 
-$allowed_formats = ["jpg", "jpeg", "png"];
-if (!in_array($uniqueImageCover, $allowed_formats)) {
-    echo "Разрешены только JPG, JPEG и PNG файлы.";
-    $uploadOk = 0;
+if($extension != "jpg" && $extension != "png" && $extension != "jpeg"
+&& $extension != "gif" ) {
+  echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+  $uploadOk = 0;
 }
 
 if ($uploadOk == 0) {
-    echo "Файл не был загружен.";
+  echo "Sorry, your file was not uploaded.";
 } else {
-    if (move_uploaded_file($_FILES["coverImage"]["tmp_name"], $target_file)) {
-        // Файл успешно загружен
-    } else {
-        echo "Произошла ошибка при загрузке файла.";
-    }
+  if (move_uploaded_file($_FILES["coverImage"]["tmp_name"], $image_target_file)) {
+    echo "The file ". htmlspecialchars($unique_filename). " has been uploaded.";
+  } else {
+    echo "Sorry, there was an error uploading your file.";
+  }
 }
+
 
 $stmt = $pdo->prepare("INSERT INTO `anime` (`id`, `title`, `desc`, `studio_id`, `releaseDate`, `ageLimit`, `coverImage`, `createDate`, `updateDate`)
     VALUES (NULL, :title, :desc, :studio_id, :releaseDate, :ageLimit, :coverImage, NOW(), NULL)");
@@ -99,7 +91,7 @@ $stmt->bindParam(':desc', $desc);
 $stmt->bindParam(':studio_id', $studio_id);
 $stmt->bindParam(':releaseDate', $releaseDate);
 $stmt->bindParam(':ageLimit', $ageLimit);
-$stmt->bindParam(':coverImage', $uniqueImageCover);
+$stmt->bindParam(':coverImage', $unique_filename);
 $stmt->execute();
 
 header('Location: ../../anime_list.php');
