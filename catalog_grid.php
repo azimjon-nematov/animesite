@@ -71,6 +71,8 @@ if ("application/x-www-form-urlencoded" == $_SERVER["CONTENT_TYPE"] && isset($_P
 	</div>
 	<!-- end card -->
 	<?php endforeach; ?>
+
+	<?php if ($totalPages > 0): ?>
 				<!-- paginator -->
 				<div class="col-12">
 
@@ -83,6 +85,8 @@ if ("application/x-www-form-urlencoded" == $_SERVER["CONTENT_TYPE"] && isset($_P
 					
 				</div>
 				<!-- end paginator -->
+	<?php endif ?>
+
 	<?php
 	exit();
 }
@@ -309,19 +313,25 @@ $current_page = isset($_GET['page']) ? max(1, min((int)$_GET['page'], $totalPage
 				</div>
 				<!-- end card -->
 				<?php endforeach; 
-				endfor;?>
+				endfor;
+				?>
+
+				<?php $totalPages = count($animes) / 30; ?>
 				
-
-
+				<?php if ($totalPages > 0): ?>
 				<!-- paginator -->
 				<div class="col-12">
 
-						<ul class="paginator">
-							<?php echo generatePaginationLinks($totalPages, $current_page); ?>
-        				</ul>
+					<ul class="paginator">
+						<?php 
+						echo generatePaginationLinks($totalPages, 1); 
+						?>
+    				</ul>
 					
 				</div>
 				<!-- end paginator -->
+				<?php endif ?>
+
 			</div>
 		</div>
 	</div>

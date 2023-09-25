@@ -1,14 +1,57 @@
 <?php 
+
+$session_id = session_id();
+if ($session_id == "") {
+	session_start();
+	$session_id = session_id();
+}
+
 include 'db.php';
+require_once 'vendor/autoload.php';
+use PhpOffice\PhpWord\TemplateProcessor;
+
+if (!empty($_POST['id'])) {
+	$id = $_POST['id'];
+	$user = SELECT("SELECT * FROM `user` WHERE id=?", 'i', [$id])[0];
+
+	$userId = $user['id'];
+	$userName = $user['name'];
+	$login = $user['login'];
+	$passwordHash = $user['passwordHash'];
+	$createDate = $user['createDate'];
+	$profileImage = empty($user['profileImage']) ? 'отсутствует' : $_SERVER['ORIGIN'] . $user['profileImage'];
+
+	//определяем имя будущего файла
+	$wordFile = 'user' . $userId . '.docx';
+
+	//загружаем шаблон
+	$document = new TemplateProcessor('Template.docx');
+
+	//заполняем нужные поля на файле ворд в соответсвии с метками
+	$document->setValue('userId', $userId);
+	$document->setValue('userName', $userName);
+
+	$document->setValue('login', $login);
+	$document->setValue('passwordHash', $passwordHash);
+	$document->setValue('createDate', $createDate);
+
+	$document->setValue('profileImage', $profileImage);
+
+	//определяем хедер для генерации файоа ворд
+	header("Content-Description: File Transfer");
+	header('Content-Disposition: attachment; filename="' . $wordFile . '"');
+	header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+	header('Content-Transfer-Encoding: binary');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Expires: 0');
+
+	//генерируем файл
+	$document->saveAs("php://output");
+	die();
+}
+
 include 'inc/head.php';
 
-$xmlstr = "<?xml version='1.0' standalone='yes'?><user> <name>User name</name> <age>18</age> <descriptions> <paragraph>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using.</paragraph> <paragraph>'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</paragraph> <paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</paragraph> <paragraph>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</paragraph> </descriptions> </user>";
-
-//$xmlDoc = new DOMDocument();
-$user = simplexml_load_string($xmlstr);
-// echo $xmlstr;
-// echo $xmlDoc->saveXML();
-// die();
 ?>
 	<!-- header search -->
 	<form action="#" class="header__search">
@@ -60,24 +103,7 @@ $user = simplexml_load_string($xmlstr);
 				<h2 class="section__title"><b>FLIXGO</b> – Best Place for Movies</h2>
 			</div>
 			<!-- end section title -->
-			<div class="col-12">
-				<?php 
-				//$mod=$xmlDoc->getElementsByTagName("user");
 
-				// foreach ($mod as $element){
-				//     echo $element->nodeValue." ".$element->nodeName;
-				// }
-				echo $user->name;
-				// print_r($user);
-				// $x = $xmlDoc->documentElement;
-				foreach ($user->paragraph as $item) {
-					echo '<p class="section__text">';
-					echo $item;
-					echo "</p>";
-				}
-
-				?>
-			</div>
 			<!-- section text -->
 			<div class="col-12">
 				<p class="section__text">It is a long <b>established</b> fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using.</p>
@@ -200,7 +226,7 @@ $user = simplexml_load_string($xmlstr);
 		<div class="row">
 			<!-- section title -->
 			<div class="col-12">
-				<h2 class="section__title section__title--no-margin">Our Partners</h2>
+				<h2 class="section__title section__title--no-margin">Download your data as .docx file</h2>
 			</div>
 			<!-- end section title -->
 
@@ -212,51 +238,13 @@ $user = simplexml_load_string($xmlstr);
 
 			<!-- partner -->
 			<div class="col-6 col-sm-4 col-md-3 col-lg-2">
-				<a href="#" class="partner">
-					<img src="img/partners/themeforest-light-background.png" alt="" class="partner__img">
-				</a>
+				<form method="post">
+					<input type="text" name="id" value="<?=$_SESSION['user_id']?>" hidden>
+					<input class="form__btn" type="submit" value="Создать файл">
+				</form>
 			</div>
 			<!-- end partner -->
 
-			<!-- partner -->
-			<div class="col-6 col-sm-4 col-md-3 col-lg-2">
-				<a href="#" class="partner">
-					<img src="img/partners/audiojungle-light-background.png" alt="" class="partner__img">
-				</a>
-			</div>
-			<!-- end partner -->
-
-			<!-- partner -->
-			<div class="col-6 col-sm-4 col-md-3 col-lg-2">
-				<a href="#" class="partner">
-					<img src="img/partners/codecanyon-light-background.png" alt="" class="partner__img">
-				</a>
-			</div>
-			<!-- end partner -->
-
-			<!-- partner -->
-			<div class="col-6 col-sm-4 col-md-3 col-lg-2">
-				<a href="#" class="partner">
-					<img src="img/partners/photodune-light-background.png" alt="" class="partner__img">
-				</a>
-			</div>
-			<!-- end partner -->
-
-			<!-- partner -->
-			<div class="col-6 col-sm-4 col-md-3 col-lg-2">
-				<a href="#" class="partner">
-					<img src="img/partners/activeden-light-background.png" alt="" class="partner__img">
-				</a>
-			</div>
-			<!-- end partner -->
-
-			<!-- partner -->
-			<div class="col-6 col-sm-4 col-md-3 col-lg-2">
-				<a href="#" class="partner">
-					<img src="img/partners/3docean-light-background.png" alt="" class="partner__img">
-				</a>
-			</div>
-			<!-- end partner -->
 		</div>
 	</div>
 </section>
