@@ -30,7 +30,7 @@ try {
 	die();
 }
 
-$userName = empty($_SESSION['user_id']) ? "unknown" : $_SESSION['user_id'];
+$userName = empty($_SESSION['name']) ? "unknown" : $_SESSION['name'];
 ?>
 
 <li class="comments__item">
@@ -39,7 +39,7 @@ $userName = empty($_SESSION['user_id']) ? "unknown" : $_SESSION['user_id'];
 		<span class="comments__name"><?=$userName?></span>
 		<span class="comments__time"><?=$now->format("d.m.Y, H:i")?></span>
 	</div>
-	<p class="comments__text"><?$text?></p>
+	<p class="comments__text"><?=$text?></p>
 	<div class="comments__actions">
 		<button type="button"><i class="icon ion-ios-share-alt"></i>Reply</button>
 	</div>
