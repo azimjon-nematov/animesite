@@ -1,5 +1,5 @@
 <?php
-include_once '../db.php';
+include_once ROOT.'/db.php';
 class User {
 
 	public static function getUserByIf($id) {
