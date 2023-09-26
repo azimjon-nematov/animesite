@@ -128,14 +128,14 @@ if ($session_id == "") {
 
 									<?php if (!$isRegistred): ?>
 
-									<a href="signin.php" class="header__sign-in">
+									<a href="index.php/signin" class="header__sign-in">
 										<i class="icon ion-ios-log-in"></i>
 										<span>sign in</span>
 									</a>
 
 									<?php else: ?>
 
-									<a href="logout.php" class="header__sign-in">
+									<a href="index.php/logout" class="header__sign-in">
 										<i class="icon ion-ios-log-in"></i>
 										<span>log out</span>
 									</a>

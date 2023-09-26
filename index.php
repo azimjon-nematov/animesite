@@ -1,4 +1,9 @@
 <?php
+$session_id = session_id();
+if ($session_id == "") {
+	session_start();
+	$session_id = session_id();
+}
 
 define("ROOT", dirname(__FILE__));
 require_once(ROOT.'/components/Router.php');

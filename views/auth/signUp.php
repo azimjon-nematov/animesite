@@ -1,14 +1,20 @@
-<?php
+<?php 
 include_once ROOT.'/db.php';
+include 'Log.php';
 
 session_start();
 $session_id = session_id();
 
-if(isset($_POST['login']) && isset($_POST['password'])) {
+if(isset($_POST['name']) && isset($_POST['login']) && isset($_POST['password'])) {
+	$name = $_POST['name'];
 	$login = $_POST['login'];
 	$password = $_POST['password'];
+
 	unset($_SESSION['errorMessage']);
 
+	if(empty($name)) {
+		$_SESSION['errorMessage']['name'] = 'Заполните имя!';
+	}
 	if(empty($login)) {
 		$_SESSION['errorMessage']['login'] = 'Заполните логин!';
 	}
@@ -17,29 +23,25 @@ if(isset($_POST['login']) && isset($_POST['password'])) {
 	} 
 
 	if (empty($_SESSION['errorMessage'])) {
-
-		$user = SELECT('SELECT * FROM user WHERE login=? && passwordHash=MD5(?)', "ss", [$login, $password]);
-		//{ ["id"], ["name"], ["login"], ["passwordHash"], ["profileImage"], ["createDate"], ["updateDate"] }
-
-		if (count($user) == 1) {
-			$user = $user[0];
+		try {
+			$query = 'INSERT INTO `user` (`name`, login, passwordHash, createDate) VALUES(?, ?, MD5(?), NOW())';
+			$userId = executeAndSelectId($query, "sss", [$name, $login, $password]);
+			
 			$_SESSION['id'] = $session_id;
-			$_SESSION['user_id'] = $user['id'];
-			$_SESSION['name'] = $user['name'];
-			$_SESSION['login'] = $user['login'];
-			//$_SESSION['password'] = $user['passwordHash'];
-		} else {
-			$_SESSION['errorMessage']['message'] = 'Неправильный логин или пароль!';
+			$_SESSION['user_id'] = $userId;
+			$_SESSION['name'] = $name;
+			$_SESSION['login'] = $login;
+		} catch (Exception $e) {
+			new Log($e);
+			$_SESSION['errorMessage']['message'] = $e->getMessage();
 		}
 
 	}
 
 	if(!empty($_SESSION['id'])) {
 	    header('Location:http://animesite/index.php');
-	    //header('Location:' . (isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'http://animesite/index.php')); //
 	}
 }
-
 
 ?>
 
@@ -85,11 +87,8 @@ if(isset($_POST['login']) && isset($_POST['password'])) {
 			<div class="row">
 				<div class="col-12">
 					<div class="sign__content">
-						<!-- authorization form -->
+						<!-- registration form -->
 						<form action="" method="POST" class="sign__form">
-							<a href="index.html" class="sign__logo">
-								<img src="../../assets/img/logo.svg" alt="">
-							</a>
 
 							<style type="text/css">
 								.err__text {
@@ -104,9 +103,20 @@ if(isset($_POST['login']) && isset($_POST['password'])) {
 								}
 							</style>
 
+							<a href="index.html" class="sign__logo">
+								<img src="../../assets/img/logo.svg" alt="">
+							</a>
 
 							<div class="sign__group">
-								<input name="login" stype="text" class="sign__input" placeholder="Email">
+								<input type="text" name="name" class="sign__input" placeholder="Name">
+							</div>
+
+							<?php if(!empty($_SESSION['errorMessage']['name'])): ?>
+								<span class="err__text"><?php echo $_SESSION['errorMessage']['name']; ?></span>
+							<?php endif ?>
+
+							<div class="sign__group">
+								<input type="text" name="login" class="sign__input" placeholder="Email">
 							</div>
 
 							<?php if(!empty($_SESSION['errorMessage']['login'])): ?>
@@ -114,21 +124,20 @@ if(isset($_POST['login']) && isset($_POST['password'])) {
 							<?php endif ?>
 
 							<div class="sign__group">
-								<input name="password" type="password" class="sign__input" placeholder="Password">
+								<input type="password" name="password" class="sign__input" placeholder="Password">
 							</div>
 
-							<?php if(!empty($_SESSION['errorMessage']['password'])): ?>
-								<span class="err__text"><?php echo $_SESSION['errorMessage']['password']; ?></span>
+							<?php if(!empty($_SESSION['errorMessage']['login'])): ?>
+								<span class="err__text"><?php echo $_SESSION['errorMessage']['login']; ?></span>
 							<?php endif ?>
 
 							<div class="sign__group sign__group--checkbox">
 								<input id="remember" name="remember" type="checkbox" checked="checked">
-								<label for="remember">Remember Me</label>
+								<label for="remember">I agree to the <a href="#">Privacy Policy</a></label>
 							</div>
 							
-							<input class="sign__btn" type="submit" value="Sign in">
-
-							<!-- <button class="sign__btn" type="button">Sign in</button> -->
+							<input class="sign__btn" type="submit" value="Sign up">
+							<!-- <button class="sign__btn" type="button">Sign up</button> -->
 
 							<?php if(!empty($_SESSION['errorMessage']['message'])): ?>
 								<span class="err__text" style="margin-bottom: 0px;margin-top: 15px;">
@@ -142,11 +151,10 @@ if(isset($_POST['login']) && isset($_POST['password'])) {
 							}
 							?>
 
-							<span class="sign__text">Don't have an account? <a href="../index.php/signup">Sign up!</a></span>
+							<span class="sign__text">Already have an account? <a href="../index.php/signin">Sign in!</a></span>
 
-							<span class="sign__text"><a href="#">Forgot password?</a></span>
 						</form>
-						<!-- end authorization form -->
+						<!-- registration form -->
 					</div>
 				</div>
 			</div>

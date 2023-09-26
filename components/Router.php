@@ -44,7 +44,7 @@ class Router
 				}
 
 				$controllerObject = new $controllerName;
-				//$result = $controllerObject->$actionName($parameters);
+				$result = null;
 				if (count($parameters) > 0) {
 					$result = call_user_func_array(array($controllerObject, $actionName), $parameters);
 				} else {
@@ -52,7 +52,8 @@ class Router
 				}
 
 				if ($result != null) {
-					break;
+					die();
+					//break;
 				}
 
 			}
