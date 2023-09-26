@@ -1,5 +1,12 @@
-<?php 
-include('db.php');
+<?php
+
+define("ROOT", dirname(__FILE__));
+require_once(ROOT.'/components/Router.php');
+
+$router = new Router();
+$router->run();
+
+include_once('db.php');
 include('inc/head.php');
 
 $sql = "SELECT a.id, e.id 'epId', a.title, a.coverImage, e.createDate FROM episode e LEFT JOIN season s ON e.season_id = s.id LEFT JOIN anime a ON s.anime_id = a.id WHERE e.isFilm = 1 ORDER BY e.createDate DESC";
