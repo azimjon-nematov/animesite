@@ -2,8 +2,8 @@
 
 $host = 'localhost';
 $db = 'animesite';
-$user = 'root';
-$password = 'root';
+$user = 'user';
+$password = 'user';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $password);
