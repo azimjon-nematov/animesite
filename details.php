@@ -82,6 +82,7 @@ $comments = SELECT($sql, 'i', [$id]);
 
 								<ul class="card__meta">
 									<li><span>Genre:</span>
+										<!-- TODO: fix link -->
 										<?php 
 											foreach($anime[0]['genres'] as $genre) {
 												echo '<a href="#">' . $genre["name"] . '</a>';
@@ -91,6 +92,7 @@ $comments = SELECT($sql, 'i', [$id]);
 									<li><span>Release year:</span> <?=$anime[0]['releaseDate']?></li>
 									<li><span>Running time:</span> 120 min</li>
 									<li><span>Студия:</span> <?=$anime[0]['studio']?></li>
+									<!-- TODO: fix link -->
 									<li><span>Country:</span> <a href="#">USA</a> </li>
 								</ul>
 
@@ -128,6 +130,9 @@ $comments = SELECT($sql, 'i', [$id]);
 			<!-- accordion -->
 			<div class="col-12 col-xl-6">
 				<div class="accordion" id="accordion">
+
+					
+					<!-- TODO: make it dynamic -->
 					<div class="accordion__card">
 						<div class="card-header" id="headingOne">
 							<button type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -351,6 +356,8 @@ $comments = SELECT($sql, 'i', [$id]);
 							</div>
 						</div>
 					</div>
+
+
 				</div>
 			</div>
 			<!-- end accordion -->

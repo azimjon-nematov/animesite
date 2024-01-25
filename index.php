@@ -73,6 +73,7 @@ for($i = 0; $i < count($films); ++$i) {
 						<div class="card card--big">
 							<div class="card__cover">
 								<?php echo '<img src="' . $film['coverImage'] . '" alt="">'; ?>
+								<!-- TODO: fix link -->
 								<a href="#" class="card__play">
 									<i class="icon ion-ios-play"></i>
 								</a>
@@ -80,6 +81,7 @@ for($i = 0; $i < count($films); ++$i) {
 							<div class="card__content">
 								<h3 class="card__title"><a href="#"><?php echo $film['title']; ?></a></h3>
 								<span class="card__category">
+									<!-- TODO: fix link -->
 									<?php 
 										foreach($film['genres'] as $genre) {
 											echo '<a href="#">' . $genre["name"] . '</a>';
@@ -144,6 +146,7 @@ for($i = 0; $i < count($films); ++$i) {
 							<div class="card">
 								<div class="card__cover">
 									<?php echo '<img src="' . $anime['coverImage'] . '" alt="">'; ?>
+									<!-- TODO: fix link -->
 									<a href="#" class="card__play">
 										<i class="icon ion-ios-play"></i>
 									</a>
@@ -151,6 +154,7 @@ for($i = 0; $i < count($films); ++$i) {
 								<div class="card__content">
 									<h3 class="card__title"><a href="#"><?php echo $anime["title"] ?></a></h3>
 									<span class="card__category">
+										<!-- TODO: fix link -->
 										<?php 
 											foreach($anime['genres'] as $genre) {
 												echo '<a href="#">' . $genre["name"] . '</a>';
@@ -191,6 +195,7 @@ for($i = 0; $i < count($films); ++$i) {
 					<div class="card">
 						<div class="card__cover">
 							<img src="assets/img/covers/cover.jpg" alt="">
+							<!-- TODO: fix link -->
 							<a href="#" class="card__play">
 								<i class="icon ion-ios-play"></i>
 							</a>

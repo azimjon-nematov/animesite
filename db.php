@@ -1,7 +1,7 @@
 <?php
 define('HOST', 'localhost');
-define('USERNAME', 'root');
-define('PASSWORD', 'root');
+define('USERNAME', 'user');
+define('PASSWORD', 'user');
 define('DATABASE', 'animesite');
 
 function SELECT($sql, $params = "", $data = array()) {

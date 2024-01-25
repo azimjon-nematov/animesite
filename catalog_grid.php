@@ -59,6 +59,7 @@ if ("application/x-www-form-urlencoded" == $_SERVER["CONTENT_TYPE"] && isset($_P
 			<div class="card__content">
 				<h3 class="card__title"><a href="details.php?id=<?=$anime['id']?>"><?=$anime["title"]?></a></h3>
 				<span class="card__category">
+					<!-- TODO: fix link -->
 					<?php 
 						foreach($anime['genres'] as $genre) {
 							echo '<a href="#">' . $genre["name"] . '</a>';
@@ -289,6 +290,7 @@ $current_page = isset($_GET['page']) ? max(1, min((int)$_GET['page'], $totalPage
 				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 					<div class="card">
 						<div class="card__cover">
+							<!-- TODO: fix link -->
 							<img src="assets/img/covers/cover.jpg" alt="">
 							<a href="#" class="card__play">
 								<i class="icon ion-ios-play"></i>
@@ -297,6 +299,7 @@ $current_page = isset($_GET['page']) ? max(1, min((int)$_GET['page'], $totalPage
 						<div class="card__content">
 							<h3 class="card__title"><a href="details.php?id=<?=$anime['id']?>"><?=$anime["title"]?></a></h3>
 							<span class="card__category">
+								<!-- TODO: fix link -->
 								<?php 
 									foreach($anime['genres'] as $genre) {
 										echo '<a href="#">' . $genre["name"] . '</a>';

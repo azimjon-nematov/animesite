@@ -35,6 +35,7 @@ $userName = empty($_SESSION['name']) ? "unknown" : $_SESSION['name'];
 
 <li class="comments__item">
 	<div class="comments__autor">
+		<!-- TODO: fix link -->
 		<img class="comments__avatar" src="assets/img/user.png" alt="">
 		<span class="comments__name"><?=$userName?></span>
 		<span class="comments__time"><?=$now->format("d.m.Y, H:i")?></span>
