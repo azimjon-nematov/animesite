@@ -7,11 +7,19 @@ $sql = "SELECT a.id 'id', a.title, a.`desc`, s.`name` as 'studio', a.releaseDate
 
 $anime = SELECT($sql);
 
-// TODO: бля
-for($i = 0; $i < count($anime); ++$i) {
-	$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
-	$anime[$i]['genres'] = SELECT($sql, 'i', [$anime[$i]['id']]);
+if count($anime) != 1 {
+	// TODO: Еггор
 }
+$anime = $anime[0];
+
+// TODO: бля
+// жанры
+// for($i = 0; $i < count($anime); ++$i) {
+// 	$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
+// 	$anime[$i]['genres'] = SELECT($sql, 'i', [$anime[$i]['id']]);
+// }
+$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
+$anime['genres'] = SELECT($sql, 'i', [$anime['id']]);
 
 
 $isRegistered = !empty($_SESSION['id']);
@@ -52,7 +60,7 @@ $comments = SELECT($sql, 'i', [$id]);
 		<div class="row">
 			<!-- title -->
 			<div class="col-12">
-				<h1 class="details__title"><?=$anime[0]['title']?></h1>
+				<h1 class="details__title"><?=$anime['title']?></h1>
 			</div>
 			<!-- end title -->
 
@@ -76,7 +84,7 @@ $comments = SELECT($sql, 'i', [$id]);
 
 									<ul class="card__list">
 										<li>HD</li>
-										<li><?=$anime[0]['ageLimit']?>+</li>
+										<li><?=$anime['ageLimit']?>+</li>
 									</ul>
 								</div>
 
@@ -84,20 +92,20 @@ $comments = SELECT($sql, 'i', [$id]);
 									<li><span>Genre:</span>
 										<!-- TODO: fix link -->
 										<?php 
-											foreach($anime[0]['genres'] as $genre) {
+											foreach($anime['genres'] as $genre) {
 												echo '<a href="#">' . $genre["name"] . '</a>';
 											}
 										?>
 									</li>
-									<li><span>Release year:</span> <?=$anime[0]['releaseDate']?></li>
+									<li><span>Release year:</span> <?=$anime['releaseDate']?></li>
 									<li><span>Running time:</span> 120 min</li>
-									<li><span>Студия:</span> <?=$anime[0]['studio']?></li>
+									<li><span>Студия:</span> <?=$anime['studio']?></li>
 									<!-- TODO: fix link -->
 									<li><span>Country:</span> <a href="#">USA</a> </li>
 								</ul>
 
 								<div class="card__description card__description--details">
-									<?=$anime[0]['desc']?>
+									<?=$anime['desc']?>
 								</div>
 							</div>
 						</div>
@@ -445,7 +453,7 @@ $comments = SELECT($sql, 'i', [$id]);
 
 										<?php if(count($comments) == 0): ?>
 										<li id="nocomments" class="comments__item">
-											<p class="comments__text">Коментариев пока нет!</p>
+											<p class="comments__text">Коментариев пока нет! Сука ты можешь стать первым!!!</p>
 										</li>
 										<?php endif; ?>										
 										
@@ -453,12 +461,15 @@ $comments = SELECT($sql, 'i', [$id]);
 
 
 									<script type="text/javascript">
+										// эта ссамая полезная функция
 										function createElementFromHTML(htmlString) {
 										  var div = document.createElement('div');
 										  div.innerHTML = htmlString.trim();
 										  // Change this to div.childNodes to support multiple top-level nodes.
 										  return div.firstChild;
 										}
+
+										// отправление запроса на добавление коментария
 										function addComment() {
 											var xhr = new XMLHttpRequest();
 											xhr.open('POST', 'comment.php');
@@ -492,7 +503,7 @@ $comments = SELECT($sql, 'i', [$id]);
 <!-- action="./adminpanel/CRUD/coment/create.php" method="POST" -->
 									<div class="form">
 										<textarea id="text" name="text" class="form__textarea" placeholder="Add comment"></textarea>
-										<input id="animeId" type="text" value="<?=$anime[0]['id']?>" hidden>
+										<input id="animeId" type="text" value="<?=$anime['id']?>" hidden>
 										<button onclick="addComment()" class="form__btn">Send</button>
 									</div>
 

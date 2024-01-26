@@ -2,6 +2,7 @@
 include('db.php');
 include('inc/head.php');
 
+// getting films
 $sql = "SELECT a.id, e.id 'epId', a.title, a.coverImage, e.createDate FROM episode e LEFT JOIN season s ON e.season_id = s.id LEFT JOIN anime a ON s.anime_id = a.id WHERE e.isFilm = 1 ORDER BY e.createDate DESC";
 
 $films = SELECT($sql);
@@ -9,6 +10,21 @@ $films = SELECT($sql);
 for($i = 0; $i < count($films); ++$i) {
 	$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
 	$films[$i]['genres'] = SELECT($sql, 'i', [$films[$i]['id']]);
+}
+
+?>
+
+
+<?php
+
+// getting animes
+$sql = "SELECT a.id 'id', a.title, a.`desc`, s.`name` as 'studio', a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON a.studio_id = s.id";
+
+$animes = SELECT($sql);
+
+for($i = 0; $i < count($animes); ++$i) {
+	$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
+	$animes[$i]['genres'] = SELECT($sql, 'i', [$animes[$i]['id']]);
 }
 
 ?>
@@ -121,19 +137,6 @@ for($i = 0; $i < count($films); ++$i) {
 	<div class="container">
 		<!-- content tabs -->
 		<div class="tab-content" id="myTabContent">
-
-			<?php
-
-			$sql = "SELECT a.id 'id', a.title, a.`desc`, s.`name` as 'studio', a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON a.studio_id = s.id";
-			
-			$animes = SELECT($sql);
-
-			for($i = 0; $i < count($animes); ++$i) {
-				$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
-				$animes[$i]['genres'] = SELECT($sql, 'i', [$animes[$i]['id']]);
-			}
-
-			?>
 
 
 			<div class="tab-pane fade show active" id="tab-2" role="tabpanel" aria-labelledby="2-tab">
