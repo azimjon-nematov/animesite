@@ -3,7 +3,7 @@ include('db.php');
 include('inc/head.php');
 
 // getting films
-$sql = "SELECT a.id, e.id 'epId', a.title, a.coverImage, e.createDate FROM episode e LEFT JOIN season s ON e.season_id = s.id LEFT JOIN anime a ON s.anime_id = a.id WHERE e.isFilm = 1 ORDER BY e.createDate DESC";
+$sql = "SELECT  (SELECT AVG(r.rate) FROM rating r WHERE r.anime_id = a.id) AS anime_rate, a.id, a.title, s.name, a.desc, a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON s.id = a.studio_id ORDER BY anime_rate DESC";
 
 $films = SELECT($sql);
 
@@ -70,7 +70,7 @@ for($i = 0; $i < count($animes); ++$i) {
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
-				<h1 class="home__title"><b>Самые популярные тайтли</b> ЭТОГО СЕЗОНА</h1>
+				<h1 class="home__title"><b>Самые популярные тайтли</b> </h1>
 
 				<button class="home__nav home__nav--prev" type="button">
 					<i class="icon ion-ios-arrow-round-back"></i>
