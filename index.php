@@ -92,12 +92,12 @@ for($i = 0; $i < count($animes); ++$i) {
 								</a>
 							</div>
 							<div class="card__content">
-								<h3 class="card__title"><a href="#"><?php echo $anime['title']; ?></a></h3>
+								<h3 class="card__title"><a href="details.php?id=<?=$anime['id']?>"><?php echo $anime['title']; ?></a></h3>
 								<span class="card__category">
 									<!-- TODO: fix link -->
 									<?php 
 									foreach($anime['genres'] as $genre) {
-										echo '<a href="details.php?id=' . $anime['id'] . '">' . $genre["name"] . '</a>';
+										echo '<a href="#">' . $genre["name"] . '</a>';
 									}
 									?>
 								</span>
