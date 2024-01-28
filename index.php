@@ -70,7 +70,7 @@ for($i = 0; $i < count($animes); ++$i) {
 	<div class="container">
 		<div class="row">
 			<div class="col-12">
-				<h1 class="home__title"><b>НОВЫЕ ФИЛЬМЫ</b> ЭТОГО СЕЗОНА</h1>
+				<h1 class="home__title"><b>Самые популярные тайтли</b> ЭТОГО СЕЗОНА</h1>
 
 				<button class="home__nav home__nav--prev" type="button">
 					<i class="icon ion-ios-arrow-round-back"></i>
@@ -125,7 +125,7 @@ for($i = 0; $i < count($animes); ++$i) {
 			<div class="row">
 				<div class="col-12">
 					<!-- content title -->
-					<h2 class="content__title">Новые серии</h2>
+					<h2 class="content__title">Онгоинги</h2>
 					<!-- end content title -->
 
 
