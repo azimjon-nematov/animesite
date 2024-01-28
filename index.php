@@ -53,9 +53,6 @@ for($i = 0; $i < count($animes); ++$i) {
 <!-- end header -->
 
 
-
-
-
 <!-- home -->
 <section class="home">
 	<!-- home bg -->
