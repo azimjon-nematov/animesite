@@ -37,6 +37,13 @@ CREATE TABLE `anime` (
 
 /*Data for the table `anime` */
 
+insert  into `anime`(`id`,`title`,`desc`,`studio_id`,`releaseDate`,`ageLimit`,`coverImage`,`createDate`,`updateDate`) values 
+(1,'Attack on Titan','text',1,'2012-01-12',18,'assets/img/posters/attack on titan.jpg','2023-09-11 12:39:56',NULL),
+(2,'Tokio ghoul','description',3,'2015-10-25',18,'assets/img/posters/tokyo ghoul.jpg','2023-09-11 12:39:56',NULL),
+(3,'Bocchi the Rock','description',6,'2020-09-14',16,'assets/img/posters/bocchi_the_rock.jpg','2023-09-11 12:39:56',NULL),
+(4,'Demon slayer','description',3,'2019-07-19',16,'assets/img/posters/demon_slayer.jpg','2023-09-11 12:39:56',NULL),
+(5,'One peice','description',2,'2019-07-19',16,'assets/img/posters/van pis.jpg','2023-09-11 12:39:56',NULL);
+
 /*Table structure for table `anime_genre` */
 
 DROP TABLE IF EXISTS `anime_genre`;
@@ -52,9 +59,23 @@ CREATE TABLE `anime_genre` (
   KEY `genre_id` (`genre_id`),
   CONSTRAINT `anime_genre_ibfk_1` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`) ON DELETE CASCADE,
   CONSTRAINT `anime_genre_ibfk_2` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 /*Data for the table `anime_genre` */
+
+insert  into `anime_genre`(`id`,`anime_id`,`genre_id`,`createDate`,`updateDate`) values 
+(1,1,1,'2023-09-11 12:39:56',NULL),
+(2,1,3,'2023-09-11 12:39:56',NULL),
+(3,2,1,'2023-09-11 12:39:56',NULL),
+(4,2,3,'2023-09-11 12:39:56',NULL),
+(5,3,2,'2023-09-11 12:39:56',NULL),
+(6,4,1,'2023-09-11 12:39:56',NULL),
+(7,4,2,'2023-09-11 12:39:56',NULL),
+(8,4,3,'2023-09-11 12:39:56',NULL),
+(9,5,1,'2023-09-11 12:39:56',NULL),
+(10,5,2,'2023-09-11 12:39:56',NULL),
+(11,5,7,'2023-09-11 12:39:56',NULL),
+(12,5,8,'2023-09-11 12:39:56',NULL);
 
 /*Table structure for table `comment` */
 
@@ -79,6 +100,13 @@ CREATE TABLE `comment` (
 
 /*Data for the table `comment` */
 
+insert  into `comment`(`id`,`text`,`anime_id`,`user_id`,`parent_id`,`createDate`,`updateDate`) values 
+(1,'0',1,2,NULL,'2023-09-21 09:14:23',NULL),
+(2,'comment text comment text comment text comment text comment text comment text comment text comment text comment text comment text comment text comment text comment text comment text ',1,2,NULL,'2023-09-21 09:15:31',NULL),
+(3,'asdasdasdasdasd',1,1,NULL,'2023-09-25 10:58:33',NULL),
+(4,'123123 asdasdasdasdasdasd',1,1,NULL,'2023-09-25 10:59:31',NULL),
+(5,'asdubasdubasdubasd asdasdasdasdasd;ams;dams;dmka;skdmna;skdnmlaksndlaskndl kasndlaksndlkasn dlknasld knaslkdnlasknd;laknsmdas',1,1,NULL,'2023-09-25 11:01:21',NULL);
+
 /*Table structure for table `episode` */
 
 DROP TABLE IF EXISTS `episode`;
@@ -100,6 +128,16 @@ CREATE TABLE `episode` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 /*Data for the table `episode` */
+
+insert  into `episode`(`id`,`season_id`,`title`,`episodeNumber`,`poster`,`video`,`isFilm`,`order`,`createDate`,`updateDate`) values 
+(1,1,'','1','assets/img/posters/attack on titan.jpg',NULL,0,1,'2023-09-18 09:41:59',NULL),
+(2,1,'','2','assets/img/posters/attack on titan.jpg',NULL,0,2,'2023-09-18 09:44:13',NULL),
+(3,1,'','3','assets/img/posters/attack on titan.jpg',NULL,0,3,'2023-09-18 09:51:30',NULL),
+(4,1,'','4','assets/img/posters/attack on titan.jpg',NULL,0,4,'2023-09-18 09:52:43',NULL),
+(5,3,'Фильм 1','1','assets/img/posters/attack on titan.jpg',NULL,1,1,'2023-09-18 10:14:23',NULL),
+(6,3,'Фильм 2','2','assets/img/posters/attack on titan.jpg',NULL,1,2,'2023-09-18 10:16:59',NULL),
+(7,4,'Бесконечный поезд','1',NULL,NULL,1,1,'2023-09-23 10:00:12',NULL),
+(8,5,'Фильм 1','1','assets/img/posters/van pis.jpg',NULL,1,1,'2023-09-23 10:00:02',NULL);
 
 /*Table structure for table `genre` */
 
@@ -145,6 +183,23 @@ CREATE TABLE `rating` (
 
 /*Data for the table `rating` */
 
+insert  into `rating`(`id`,`rate`,`anime_id`,`user_id`,`createDate`,`updateDate`) values 
+(1,10,1,2,'2023-09-11 12:39:57',NULL),
+(2,9,1,3,'2023-09-11 12:39:57',NULL),
+(3,10,1,1,'2023-09-11 12:39:57',NULL),
+(4,10,3,1,'2023-09-11 12:39:57',NULL),
+(5,9,3,2,'2023-09-11 12:39:57',NULL),
+(6,8,3,3,'2023-09-11 12:39:57',NULL),
+(7,7,2,2,'2024-01-28 14:21:57',NULL),
+(8,3,4,2,'2024-01-28 14:21:57',NULL),
+(9,7,5,2,'2024-01-28 14:21:57',NULL),
+(10,7,2,1,'2024-01-28 14:21:57',NULL),
+(11,3,4,1,'2024-01-28 14:21:57',NULL),
+(12,7,5,1,'2024-01-28 14:21:57',NULL),
+(13,7,2,3,'2024-01-28 14:21:57',NULL),
+(14,3,4,3,'2024-01-28 14:21:57',NULL),
+(15,7,5,3,'2024-01-28 14:21:57',NULL);
+
 /*Table structure for table `season` */
 
 DROP TABLE IF EXISTS `season`;
@@ -166,6 +221,13 @@ CREATE TABLE `season` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 /*Data for the table `season` */
+
+insert  into `season`(`id`,`anime_id`,`status_id`,`title`,`coverImage`,`order`,`createDate`,`updateDate`) values 
+(1,1,2,'1 сезон',NULL,0,'2023-09-18 09:36:44',NULL),
+(2,1,2,'2 сезон',NULL,1,'2023-09-18 09:37:48',NULL),
+(3,1,2,'Фильмы',NULL,2,'2023-09-18 09:38:29',NULL),
+(4,4,2,'бесконечный поезд',NULL,2,'2023-09-23 09:53:00',NULL),
+(5,5,2,'Фильмы',NULL,2,'2023-09-23 09:56:22',NULL);
 
 /*Table structure for table `status` */
 
@@ -228,6 +290,17 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 /*Data for the table `user` */
+
+insert  into `user`(`id`,`name`,`login`,`passwordHash`,`profileImage`,`isAdmin`,`createDate`,`updateDate`) values 
+(1,'azer','azer','827ccb0eea8a706c4c34a16891f84e7b',NULL,1,'2023-09-11 12:39:55',NULL),
+(2,'Akmalkhon','ak47','01cfcd4f6b8770febfb40cb906715822',NULL,1,'2023-09-11 12:39:55',NULL),
+(3,'yagonchiz','abcde','e2fc714c4727ee9395f324cd2e7f331f',NULL,0,'2023-09-11 12:39:55','2023-09-24 21:45:02'),
+(4,'1','2','eccbc87e4b5ce2fe28308fd9f2a7baf3',NULL,0,'2023-09-14 11:51:44',NULL),
+(8,'1','1222','c4ca4238a0b923820dcc509a6f75849b',NULL,0,'2023-09-14 12:19:45',NULL),
+(9,'1','111222','c4ca4238a0b923820dcc509a6f75849b',NULL,0,'2023-09-15 08:29:14',NULL),
+(10,'Zidan','Kohai','11119b85d4579ad402a68fadfce8f515',NULL,0,'2024-01-24 04:39:14',NULL),
+(12,'Zayniddin','zidankohai@gmail.com','d8829f76e2fa11294376ae97fc9ee951',NULL,0,'2024-01-26 21:32:17',NULL),
+(15,'asdasd','asdasd','a8f5f167f44f4964e6c998dee827110c',NULL,0,'2024-01-26 21:39:06',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
