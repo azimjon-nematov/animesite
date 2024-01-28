@@ -2,14 +2,14 @@
 include('db.php');
 include('inc/head.php');
 
-// getting films
-$sql = "SELECT  (SELECT AVG(r.rate) FROM rating r WHERE r.anime_id = a.id) AS anime_rate, a.id, a.title, s.name, a.desc, a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON s.id = a.studio_id ORDER BY anime_rate DESC";
+// getting popularAnimes
+$sql = "SELECT  (SELECT AVG(r.rate) FROM rating r WHERE r.anime_id = a.id) AS anime_rate, a.id 'id', a.title, s.name, a.desc, a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON s.id = a.studio_id ORDER BY anime_rate DESC";
 
-$films = SELECT($sql);
+$popularAnimes = SELECT($sql);
 
-for($i = 0; $i < count($films); ++$i) {
+for($i = 0; $i < count($popularAnimes); ++$i) {
 	$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
-	$films[$i]['genres'] = SELECT($sql, 'i', [$films[$i]['id']]);
+	$popularAnimes[$i]['genres'] = SELECT($sql, 'i', [$popularAnimes[$i]['id']]);
 }
 
 ?>
@@ -80,25 +80,25 @@ for($i = 0; $i < count($animes); ++$i) {
 			<div class="col-12">
 				<div class="owl-carousel home__carousel">
 
-					<?php foreach ($films as $film): ?>	
+					<?php foreach ($popularAnimes as $anime): ?>	
 					<div class="item">
 						<!-- card -->
 						<div class="card card--big">
 							<div class="card__cover">
-								<?php echo '<img src="' . $film['coverImage'] . '" alt="">'; ?>
+								<?php echo '<img src="' . $anime['coverImage'] . '" alt="">'; ?>
 								<!-- TODO: fix link -->
-								<a href="#" class="card__play">
+								<a href="details.php?id=<?=$anime['id']?>" class="card__play">
 									<i class="icon ion-ios-play"></i>
 								</a>
 							</div>
 							<div class="card__content">
-								<h3 class="card__title"><a href="#"><?php echo $film['title']; ?></a></h3>
+								<h3 class="card__title"><a href="#"><?php echo $anime['title']; ?></a></h3>
 								<span class="card__category">
 									<!-- TODO: fix link -->
 									<?php 
-										foreach($film['genres'] as $genre) {
-											echo '<a href="#">' . $genre["name"] . '</a>';
-										}
+									foreach($anime['genres'] as $genre) {
+										echo '<a href="details.php?id=' . $anime['id'] . '">' . $genre["name"] . '</a>';
+									}
 									?>
 								</span>
 								<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>

@@ -7,9 +7,9 @@ $sql = "SELECT a.id 'id', a.title, a.`desc`, s.`name` as 'studio', a.releaseDate
 
 $anime = SELECT($sql);
 
-if count($anime) != 1 {
-	// TODO: Еггор
-}
+//if count($anime) != 1 {
+//	// TODO: Еггор
+//}
 $anime = $anime[0];
 
 // TODO: бля
@@ -71,7 +71,8 @@ $comments = SELECT($sql, 'i', [$id]);
 						<!-- card cover -->
 						<div class="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3">
 							<div class="card__cover">
-								<img src="assets/img/covers/cover.jpg" alt="">
+								<!-- TODO: fix cover image coverImage -->
+								<img src="<?=$anime['coverImage']?>" alt="">
 							</div>
 						</div>
 						<!-- end card cover -->
