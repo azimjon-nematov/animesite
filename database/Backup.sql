@@ -1,6 +1,6 @@
 /*
 SQLyog Community v13.1.7 (64 bit)
-MySQL - 10.4.27-MariaDB : Database - animesite
+MySQL - 5.6.51 : Database - animesite
 *********************************************************************
 */
 
@@ -12,7 +12,7 @@ MySQL - 10.4.27-MariaDB : Database - animesite
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`animesite` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`animesite` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
 USE `animesite`;
 
@@ -27,13 +27,13 @@ CREATE TABLE `anime` (
   `studio_id` int(11) NOT NULL,
   `releaseDate` date NOT NULL,
   `ageLimit` int(2) NOT NULL,
-  `coverImage` text DEFAULT NULL,
+  `coverImage` text,
   `createDate` datetime NOT NULL,
   `updateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `studio_id` (`studio_id`),
   CONSTRAINT `anime_ibfk_1` FOREIGN KEY (`studio_id`) REFERENCES `studio` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 /*Data for the table `anime` */
 
@@ -60,7 +60,7 @@ CREATE TABLE `anime_genre` (
   KEY `genre_id` (`genre_id`),
   CONSTRAINT `anime_genre_ibfk_1` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`) ON DELETE CASCADE,
   CONSTRAINT `anime_genre_ibfk_2` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `anime_genre` */
 
@@ -83,7 +83,7 @@ CREATE TABLE `comment` (
   CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`) ON DELETE CASCADE,
   CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`parent_id`) REFERENCES `comment` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `comment` */
 
@@ -96,8 +96,8 @@ CREATE TABLE `episode` (
   `season_id` int(11) NOT NULL,
   `title` varchar(250) NOT NULL,
   `episodeNumber` varchar(100) NOT NULL,
-  `poster` text DEFAULT NULL,
-  `video` text DEFAULT NULL,
+  `poster` text,
+  `video` text,
   `isFilm` tinyint(1) NOT NULL,
   `order` int(11) NOT NULL,
   `createDate` datetime NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE `episode` (
   PRIMARY KEY (`id`),
   KEY `season_id` (`season_id`),
   CONSTRAINT `episode_ibfk_1` FOREIGN KEY (`season_id`) REFERENCES `season` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `episode` */
 
@@ -119,7 +119,7 @@ CREATE TABLE `genre` (
   `createDate` datetime NOT NULL,
   `updateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 /*Data for the table `genre` */
 
@@ -160,7 +160,7 @@ CREATE TABLE `rating` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`) ON DELETE CASCADE,
   CONSTRAINT `rating_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `rating` */
 
@@ -173,7 +173,7 @@ CREATE TABLE `season` (
   `anime_id` int(11) NOT NULL,
   `status_id` int(11) NOT NULL,
   `title` varchar(250) NOT NULL,
-  `coverImage` text DEFAULT NULL,
+  `coverImage` text,
   `order` int(11) NOT NULL,
   `createDate` datetime NOT NULL,
   `updateDate` datetime DEFAULT NULL,
@@ -182,7 +182,7 @@ CREATE TABLE `season` (
   KEY `status_id` (`status_id`),
   CONSTRAINT `season_ibfk_1` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`) ON DELETE CASCADE,
   CONSTRAINT `season_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `season` */
 
@@ -196,7 +196,7 @@ CREATE TABLE `status` (
   `createDate` datetime NOT NULL,
   `updateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `status` */
 
@@ -215,7 +215,7 @@ CREATE TABLE `studio` (
   `createDate` datetime NOT NULL,
   `updateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 /*Data for the table `studio` */
 
@@ -230,7 +230,18 @@ insert  into `studio`(`id`,`name`,`createDate`,`updateDate`) values
 (8,'White Fox','2023-09-11 12:39:55',NULL),
 (9,'Brain\'s Base','2024-01-28 21:49:09',NULL),
 (10,'Kyoto Animation','2024-01-29 00:45:40',NULL),
-(11,'Lerche','2024-01-29 00:55:01',NULL);
+(11,'Lerche','2024-01-29 00:55:01',NULL),
+(12,'Madhouse Studios','2024-02-21 20:14:57',NULL),
+(13,'8bit','2024-02-21 20:14:57',NULL),
+(14,'Dogakobo','2024-02-21 20:14:57',NULL),
+(15,'Studio Bind','2024-02-21 20:14:57',NULL),
+(16,'Nexus','2024-02-21 20:14:57',NULL),
+(17,'J.C. Staff','2024-02-21 20:14:57',NULL),
+(18,'Silver Link','2024-02-21 20:14:57',NULL),
+(19,'Sunrise','2024-02-21 20:14:57',NULL),
+(20,'Studio Pierrot','2024-02-21 20:14:57',NULL),
+(21,'Passione','2024-02-21 20:14:57',NULL),
+(22,'P.A. Works','2024-02-21 20:14:57',NULL);
 
 /*Table structure for table `user` */
 
@@ -241,13 +252,13 @@ CREATE TABLE `user` (
   `name` varchar(250) NOT NULL,
   `login` varchar(250) NOT NULL,
   `passwordHash` varchar(32) NOT NULL,
-  `profileImage` text DEFAULT NULL,
-  `isAdmin` tinyint(1) NOT NULL DEFAULT 0,
+  `profileImage` text,
+  `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
   `createDate` datetime NOT NULL,
   `updateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `user` */
 
