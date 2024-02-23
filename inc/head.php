@@ -40,7 +40,7 @@ if ($session_id == "") {
 		
 		<meta name="description" content="">
 		<meta name="keywords" content="">
-		<meta name="author" content="Dmitry Volkov">
+		<meta name="author" content="Weeb Studio">
 
 	</head>
 
@@ -72,17 +72,17 @@ if ($session_id == "") {
 										<a href="index.php" class="header__nav-link">Home</a>
 									</li>
 
-									<!-- dropdown -->
 									<li class="header__nav-item">
 										<a class="header__nav-link" href="catalog_grid.php" role="button"  aria-haspopup="true" aria-expanded="false">Movies</a>
 									</li>
-									<!-- end dropdown -->
 
-									<!-- dropdown -->
 									<li class="header__nav-item">
 										<a class="header__nav-link" href="catalog2.php" role="button"  aria-haspopup="true" aria-expanded="false">Series</a>
 									</li>
-									<!-- end dropdown -->
+
+									<li class="header__nav-item">
+										<a class="header__nav-link" href="about.php" role="button"  aria-haspopup="true" aria-expanded="false">About</a>
+									</li>
 
 									<!-- <li class="header__nav-item">
 										<a href="pricing.html" class="header__nav-link">Pricing Plan</a>
@@ -106,18 +106,6 @@ if ($session_id == "") {
 
 									<?php endif ?>
 
-									<!-- dropdown -->
-									<li class="dropdown header__nav-item">
-										<a class="dropdown-toggle header__nav-link header__nav-link--more" href="#" role="button" id="dropdownMenuMore" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-ios-more"></i></a>
-
-										<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuMore">
-											<li><a href="about.php">About</a></li>
-											<li><a href="signin.html">Sign In</a></li>
-											<li><a href="signup.html">Sign Up</a></li>
-											<li><a href="404.html">404 Page</a></li>
-										</ul>
-									</li>
-									<!-- end dropdown -->
 								</ul>
 								<!-- end header nav -->
 
