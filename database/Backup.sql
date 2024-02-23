@@ -106,7 +106,7 @@ CREATE TABLE `comment` (
   CONSTRAINT `comment_ibfk_1` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`) ON DELETE CASCADE,
   CONSTRAINT `comment_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `comment_ibfk_3` FOREIGN KEY (`parent_id`) REFERENCES `comment` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `comment` */
 
@@ -128,7 +128,7 @@ CREATE TABLE `episode` (
   PRIMARY KEY (`id`),
   KEY `season_id` (`season_id`),
   CONSTRAINT `episode_ibfk_1` FOREIGN KEY (`season_id`) REFERENCES `season` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `episode` */
 
@@ -183,7 +183,7 @@ CREATE TABLE `rating` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `rating_ibfk_1` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`) ON DELETE CASCADE,
   CONSTRAINT `rating_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `rating` */
 
@@ -205,7 +205,7 @@ CREATE TABLE `season` (
   KEY `status_id` (`status_id`),
   CONSTRAINT `season_ibfk_1` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`) ON DELETE CASCADE,
   CONSTRAINT `season_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `season` */
 
@@ -281,9 +281,19 @@ CREATE TABLE `user` (
   `updateDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `login` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 /*Data for the table `user` */
+
+insert  into `user`(`id`,`name`,`login`,`passwordHash`,`profileImage`,`isAdmin`,`createDate`,`updateDate`) values 
+(1,'admin','admin','21232f297a57a5a743894a0e4a801fc3',NULL,0,'2024-02-23 17:50:45',NULL),
+(2,'zidan','zidan','dda542322951ee590e8cb5dc932f676b',NULL,0,'2024-02-23 18:11:24',NULL),
+(3,'azer','azer','13085a63a2b3e4beb7ab10ee395aefe4',NULL,0,'2024-02-23 18:11:39',NULL),
+(4,'rava','rava','427a803782fbe50f42d2c335f95a59ce',NULL,0,'2024-02-23 18:12:25',NULL),
+(5,'jamal','jamal','74f56399c89f4bd03ff5e85b6bf4e85f',NULL,0,'2024-02-23 18:12:41',NULL),
+(6,'xseyn','xseyn','afb4ba05d2d08cf8b4a4a0208e185e7a',NULL,0,'2024-02-23 18:17:33',NULL),
+(7,'oleg','oleg','045b9e4d8b96dce053950297a8a39665',NULL,0,'2024-02-23 18:18:14',NULL),
+(8,'bogdan','bogdan','dd677267f076e036dd1a3a36949375d3',NULL,0,'2024-02-23 18:18:30',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
