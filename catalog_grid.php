@@ -284,8 +284,7 @@ $current_page = isset($_GET['page']) ? max(1, min((int)$_GET['page'], $totalPage
 
 
 
-				<?php for ($i=0; $i < 6; $i++):
-				foreach($animes as $anime): ?>
+				<?php foreach($animes as $anime): ?>
 					<!-- card -->
 				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 					<div class="card">
@@ -311,8 +310,7 @@ $current_page = isset($_GET['page']) ? max(1, min((int)$_GET['page'], $totalPage
 					</div>
 				</div>
 				<!-- end card -->
-				<?php endforeach; 
-				endfor;?>
+				<?php endforeach;?>
 				
 
 
