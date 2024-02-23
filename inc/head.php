@@ -94,13 +94,15 @@ if ($session_id == "") {
 
 									<?php if ($isRegistred): ?>
 
-									<li class="header__nav-item">
-										<a href="profile.php" class="header__nav-link">Профиль</a>
-									</li>
+										<li class="header__nav-item">
+											<a href="profile.php" class="header__nav-link">Профиль</a>
+										</li>
 
-									<li class="header__nav-item">
-										<a href="adminpanel/index.php" class="header__nav-link">Admin panel</a>
-									</li>
+										<?php if ($_SESSION['isAdmin'] == 1): ?>
+											<li class="header__nav-item">
+												<a href="adminpanel/index.php" class="header__nav-link">Admin panel</a>
+											</li>
+										<?php endif ?>
 
 									<?php endif ?>
 

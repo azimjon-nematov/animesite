@@ -27,6 +27,10 @@ if(isset($_POST['login']) && isset($_POST['password'])) {
 			$_SESSION['user_id'] = $user['id'];
 			$_SESSION['name'] = $user['name'];
 			$_SESSION['login'] = $user['login'];
+			unset($_SESSION['isAdmin']);
+			if ($user['isAdmin'] == 1) {
+				$_SESSION['isAdmin'] = $user['isAdmin'];
+			}
 			//$_SESSION['password'] = $user['passwordHash'];
 		} else {
 			$_SESSION['errorMessage']['message'] = 'Неправильный логин или пароль!';
