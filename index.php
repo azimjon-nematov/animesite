@@ -3,7 +3,7 @@ include('db.php');
 include('inc/head.php');
 
 // getting popularAnimes
-$sql = "SELECT  (SELECT AVG(r.rate) FROM rating r WHERE r.anime_id = a.id) AS anime_rate, a.id 'id', a.title, s.name, a.desc, a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON s.id = a.studio_id ORDER BY anime_rate DESC";
+$sql = "SELECT  (SELECT AVG(r.rate) FROM rating r WHERE r.anime_id = a.id) AS anime_rate, a.id 'id', a.title, s.name, a.desc, a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON s.id = a.studio_id HAVING anime_rate IS NOT NULL ORDER BY anime_rate DESC";
 
 $popularAnimes = SELECT($sql);
 
@@ -13,7 +13,7 @@ for($i = 0; $i < count($popularAnimes); ++$i) {
 }
 
 ?>
-
+	
 
 <?php
 
@@ -101,7 +101,7 @@ for($i = 0; $i < count($animes); ++$i) {
 									}
 									?>
 								</span>
-								<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
+								<span class="card__rate"><i class="icon ion-ios-star"></i><?php echo $anime['anime_rate'] ?></span>
 							</div>
 						</div>
 						<!-- end card -->
