@@ -257,9 +257,36 @@ CREATE TABLE `season` (
   KEY `status_id` (`status_id`),
   CONSTRAINT `season_ibfk_1` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`) ON DELETE CASCADE,
   CONSTRAINT `season_ibfk_2` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 /*Data for the table `season` */
+
+insert  into `season`(`id`,`anime_id`,`status_id`,`title`,`coverImage`,`order`,`createDate`,`updateDate`) values 
+(1,30,2,'1 сезон',NULL,1,'2024-02-23 21:36:07',NULL),
+(2,30,1,'2 сезон',NULL,2,'2024-02-23 21:36:07',NULL),
+(3,7,2,'',NULL,1,'2024-02-23 21:36:07',NULL),
+(4,6,2,'1 сезон',NULL,1,'2024-02-23 21:36:07',NULL),
+(5,6,2,'2 сезон',NULL,2,'2024-02-23 21:36:07',NULL),
+(6,6,2,'3 сезон',NULL,3,'2024-02-23 21:36:07',NULL),
+(7,10,2,'1 сезон',NULL,1,'2024-02-23 21:36:07',NULL),
+(8,10,2,'2 сезон',NULL,2,'2024-02-23 21:36:07',NULL),
+(9,10,1,'3 сезон',NULL,3,'2024-02-23 21:36:07',NULL),
+(10,12,1,'1 сезон',NULL,1,'2024-02-23 21:36:07',NULL),
+(11,16,2,'1 сезон',NULL,1,'2024-02-23 21:36:07',NULL),
+(12,16,2,'2 сезон',NULL,2,'2024-02-23 21:36:07',NULL),
+(13,18,2,'1 сезон',NULL,1,'2024-02-23 21:36:07',NULL),
+(14,18,2,'2 сезон',NULL,2,'2024-02-23 21:36:07',NULL),
+(15,22,2,'1 сезон',NULL,1,'2024-02-23 21:36:07',NULL),
+(16,22,2,'2 сезон',NULL,2,'2024-02-23 21:36:07',NULL),
+(17,22,2,'3 сезон',NULL,3,'2024-02-23 21:36:07',NULL),
+(18,22,2,'4 сезон',NULL,4,'2024-02-23 21:36:07',NULL),
+(19,25,2,'Восстание Лелуша (1 сезон)',NULL,1,'2024-02-23 21:36:07',NULL),
+(20,25,2,'Восстание Лелуша R2 (2 сезон)',NULL,2,'2024-02-23 21:36:07',NULL),
+(21,26,2,'',NULL,1,'2024-02-23 21:36:07',NULL),
+(22,11,2,'1 сезон',NULL,1,'2024-02-23 21:36:07',NULL),
+(23,11,2,'2 сезон',NULL,2,'2024-02-23 21:36:07',NULL),
+(24,8,2,'1',NULL,1,'2024-02-23 21:36:07',NULL),
+(25,8,2,'2',NULL,2,'2024-02-23 21:36:07',NULL);
 
 /*Table structure for table `status` */
 
