@@ -6,7 +6,7 @@ if ($session_id == "") {
 	$session_id = session_id();
 }
 
-// Функция для генерации ссылок на страницы
+// Функция для генерации ссылок на страницы 
 function generatePaginationLinks($totalPages, $currentPage) {
     $links = '';
 
@@ -51,7 +51,8 @@ if ("application/x-www-form-urlencoded" == $_SERVER["CONTENT_TYPE"] && isset($_P
 	<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
 		<div class="card">
 			<div class="card__cover">
-				<img src="assets/img/covers/cover.jpg" alt="">
+				<!-- <img src="<?=$anime['coverImage']?>" alt=""> -->
+				<?php echo '<img src="' . $anime['coverImage'] . '" alt="">'; ?>
 				<a href="#" class="card__play">
 					<i class="icon ion-ios-play"></i>
 				</a>
@@ -72,31 +73,39 @@ if ("application/x-www-form-urlencoded" == $_SERVER["CONTENT_TYPE"] && isset($_P
 	</div>
 	<!-- end card -->
 	<?php endforeach; ?>
-				<!-- paginator -->
-				<div class="col-12">
+		<!-- paginator -->
+		<div class="col-12">
 
-						<ul class="paginator">
-							<?php 
-							$totalPages = count($animes) / 30;
-							echo generatePaginationLinks($totalPages, 1); 
-							?>
-        				</ul>
-					
-				</div>
-				<!-- end paginator -->
+			<ul class="paginator">
+				<?php 
+				$totalPages = count($animes) / 30;
+				echo generatePaginationLinks($totalPages, 1); 
+				?>
+			</ul>
+			
+		</div>
+		<!-- end paginator -->
 	<?php
 	exit();
 }
 
 
 
+$animes = [];
 
+if (isset($_GET['search'])) {
+	$search = '%' . $_GET['search'] . '%';
+	// echo $search;
+	// die();
+	$sql = "SELECT a.id 'id', a.title, a.`desc`, s.`name` as 'studio', a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON a.studio_id = s.id WHERE a.title LIKE ?";
+
+	$animes = SELECT($sql, "s", [$search]);
+} else {
+	$sql = "SELECT a.id 'id', a.title, a.`desc`, s.`name` as 'studio', a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON a.studio_id = s.id";
+	$animes = SELECT($sql);
+}
 
 $genres = SELECT( "SELECT * FROM genre");
-
-$sql = "SELECT a.id 'id', a.title, a.`desc`, s.`name` as 'studio', a.releaseDate, a.ageLimit, a.coverImage FROM anime a LEFT JOIN studio s ON a.studio_id = s.id";
-
-$animes = SELECT($sql);
 
 for($i = 0; $i < count($animes); ++$i) {
 	$sql = "SELECT g.name FROM genre g LEFT JOIN anime_genre ag ON g.id = ag.genre_id WHERE ag.anime_id = ?";
@@ -104,7 +113,6 @@ for($i = 0; $i < count($animes); ++$i) {
 }
 
 
-// Замените эти переменные данными из вашего приложения или базы данных
 $totalPages = 10; // Общее количество страниц
 $current_page = isset($_GET['page']) ? max(1, min((int)$_GET['page'], $totalPages)) : 1;
 
@@ -290,7 +298,8 @@ $current_page = isset($_GET['page']) ? max(1, min((int)$_GET['page'], $totalPage
 					<div class="card">
 						<div class="card__cover">
 							<!-- TODO: fix link -->
-							<img src="assets/img/covers/cover.jpg" alt="">
+							<!-- <img src="assets/img/covers/cover.jpg" alt=""> -->
+							<?php echo '<img src="' . $anime['coverImage'] . '" alt="">'; ?>
 							<a href="#" class="card__play">
 								<i class="icon ion-ios-play"></i>
 							</a>
