@@ -101,7 +101,7 @@ for($i = 0; $i < count($animes); ++$i) {
 									}
 									?>
 								</span>
-								<span class="card__rate"><i class="icon ion-ios-star"></i><?php echo $anime['anime_rate'] ?></span>
+								<span class="card__rate"><i class="icon ion-ios-star"></i><?php echo (float)($anime['anime_rate']) ?></span>
 							</div>
 						</div>
 						<!-- end card -->
