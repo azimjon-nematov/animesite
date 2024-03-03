@@ -1248,6 +1248,8 @@ ul {
 }
 .card__cover img {
   width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
 }
 .card__cover:before {
   content: '';
